@@ -9,14 +9,14 @@
 import QuartzCore.CALayer
 import UIKit.UIScreen
 
-extension CALayer {
+public extension CALayer {
     func addGradient(size: CGSize, colors: [CGColor], locations: [NSNumber]? = nil, shouldRasterize: Bool = false) -> CALayer {
         let gradientLayer = CALayer.createGradient(size: size, colors: colors, locations: locations, shouldRasterize: shouldRasterize)
         addSublayer(gradientLayer)
         return gradientLayer
     }
 
-    public static func createGradient(size: CGSize,
+    static func createGradient(size: CGSize,
                                       colors: [CGColor],
                                       locations: [NSNumber]? = [0, 1],
                                       shouldRasterize: Bool = false) -> CAGradientLayer {
@@ -35,7 +35,7 @@ extension CALayer {
     }
 }
 
-extension UIView {
+public extension UIView {
     func addGradientLayer(colors: [UIColor], locations: [NSNumber]? = nil, shouldRasterize: Bool = false) -> CALayer {
         let cgColors = colors.map { $0.cgColor }
         return self.layer.addGradient(size: self.bounds.size, colors: cgColors, locations: locations, shouldRasterize: shouldRasterize)

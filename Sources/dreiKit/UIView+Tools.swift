@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension UIView {
+public extension UIView {
 
     class func verticalLine() -> UIView {
         let view = UIView.autoLayout()
@@ -34,7 +34,7 @@ extension UIView {
 }
 
 
-extension UIView {
+public extension UIView {
 
     // Scale and rotate does not work combined when animating
     // In this case chain it manually together

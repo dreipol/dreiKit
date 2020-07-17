@@ -11,7 +11,7 @@ import UIKit
 let kSpringRotationAnimationKey = "kSpringRotationAnimationKey"
 let kOpacityAnimationKey = "kOpacityAnimationKey"
 
-extension CALayer {
+public extension CALayer {
 
     func springAnimate(degree: CGFloat, repeatCount: Float = 1, delegate: CAAnimationDelegate? = nil) {
         let animation = CASpringAnimation(keyPath: "transform.rotation")

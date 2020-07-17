@@ -12,7 +12,7 @@ import UIKit.UICollectionView
 
 public typealias IdentifiableCollectionViewCell = UICollectionViewCell&IdentifiableCell
 
-extension UICollectionView {
+public extension UICollectionView {
     func register(_ cellClass: IdentifiableCollectionViewCell.Type) {
         register(cellClass, forCellWithReuseIdentifier: cellClass.cellIdentifier)
     }

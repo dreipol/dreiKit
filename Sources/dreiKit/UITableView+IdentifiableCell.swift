@@ -11,7 +11,7 @@ import UIKit.UITableView
 
 public typealias IdentifiableTableViewCell = UITableViewCell&IdentifiableCell
 
-extension UITableView {
+public extension UITableView {
     func register(_ cellClass: IdentifiableTableViewCell.Type) {
         register(cellClass, forCellReuseIdentifier: cellClass.cellIdentifier)
     }

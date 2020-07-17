@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension CALayer {
+public extension CALayer {
     func rotate(_ degree: CGFloat, combineTransform: Bool = false) {
         let angle = degree * CGFloat.pi / 180
         if combineTransform {

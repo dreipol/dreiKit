@@ -9,9 +9,9 @@
 import UIKit.UIStackView
 import UIKit.NSLayoutConstraint
 
-extension UIStackView {
+public extension UIStackView {
 
-    public static func autoLayout(axis: NSLayoutConstraint.Axis) -> Self {
+    static func autoLayout(axis: NSLayoutConstraint.Axis) -> Self {
         let stackView = autoLayout()
         stackView.axis = axis
         return stackView

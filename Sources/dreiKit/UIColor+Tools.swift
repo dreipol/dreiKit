@@ -8,12 +8,12 @@
 
 import UIKit
 
-extension UIColor {
+public extension UIColor {
     static var random: UIColor {
         return UIColor(red: .random(), green: .random(), blue: .random(), alpha: 1)
     }
 
-    public convenience init(hex: Int) {
+    convenience init(hex: Int) {
         let blue = hex & 0x0000FF
         let green = ((hex & 0x00FF00) >> 8)
         let red = ((hex & 0xFF0000) >> 16)

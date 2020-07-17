@@ -6,8 +6,8 @@
 import Foundation
 import UIKit.UICollectionView
 
-extension UICollectionView {
-    public static func createHorizontal(with layout: UICollectionViewFlowLayout, itemSize: CGSize) -> UICollectionView {
+public extension UICollectionView {
+    static func createHorizontal(with layout: UICollectionViewFlowLayout, itemSize: CGSize) -> UICollectionView {
         layout.scrollDirection = .horizontal
         layout.sectionInset = .zero
         layout.itemSize = itemSize

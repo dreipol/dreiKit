@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension UIView {
+public extension UIView {
 
     class func autoLayout() -> Self {
         let view = self.init(frame: .zero)

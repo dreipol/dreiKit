@@ -5,13 +5,13 @@
 
 import UIKit.UIView
 
-protocol BlockTransformable {
+public protocol BlockTransformable {
 }
 
 extension UIView: BlockTransformable {
 }
 
-extension BlockTransformable where Self: UIView {
+public extension BlockTransformable where Self: UIView {
     func then(_ action: (Self) -> Void) -> Self {
         action(self)
         return self
