@@ -13,6 +13,9 @@ Pod::Spec.new do |s|
   # s.resource_bundles = {
   #   'dreiKit' => ['dreiKit/Sources/**/*.xib']
   # }
-  # s.ios.frameworks = 'UIKit', 'Foundation'
+  s.ios.frameworks = 'UIKit', 'Foundation'
   # s.dependency 'Eureka', '~> 4.0'
+  s.info_plist = {
+    'CFBundleIdentifier' => 'ch.dreipol.dreikit'
+  }
 end
