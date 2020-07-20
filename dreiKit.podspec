@@ -10,6 +10,7 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '12.0'
   s.requires_arc = true
   s.ios.source_files = 'Sources/dreiKit/**/*.{swift}'
+  s.swift_version = '5.0'
   # s.resource_bundles = {
   #   'dreiKit' => ['dreiKit/Sources/**/*.xib']
   # }

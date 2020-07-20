@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import QuartzCore
 
 let kSpringRotationAnimationKey = "kSpringRotationAnimationKey"
 let kOpacityAnimationKey = "kOpacityAnimationKey"
