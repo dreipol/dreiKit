@@ -19,4 +19,7 @@ Pod::Spec.new do |s|
   s.info_plist = {
     'CFBundleIdentifier' => 'ch.dreipol.dreikit'
   }
+  s.pod_target_xcconfig = {
+    'PRODUCT_BUNDLE_IDENTIFIER': 'ch.dreipol.dreikit'
+  }
 end
