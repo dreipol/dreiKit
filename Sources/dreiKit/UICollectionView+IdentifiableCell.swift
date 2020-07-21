@@ -9,7 +9,6 @@
 import Foundation
 import UIKit.UICollectionView
 
-
 public typealias IdentifiableCollectionViewCell = UICollectionViewCell&IdentifiableCell
 
 public extension UICollectionView {

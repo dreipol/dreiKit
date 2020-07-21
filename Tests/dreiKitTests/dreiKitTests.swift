@@ -1,6 +1,7 @@
 import XCTest
 @testable import dreiKit
 
+// swiftlint:disable:next type_name
 final class dreiKitTests: XCTestCase {
 //    func testExample() {
 //        // This is an example of a functional test case.

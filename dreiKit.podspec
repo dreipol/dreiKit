@@ -22,4 +22,19 @@ Pod::Spec.new do |s|
   s.pod_target_xcconfig = {
     'PRODUCT_BUNDLE_IDENTIFIER': 'ch.dreipol.dreikit'
   }
+  s.script_phases = [
+    {
+        :name => 'Swiftlint',
+        :execution_position => :before_compile,
+        :shell_path => '/bin/sh',
+        :script => <<-SCRIPT
+        cd $PODS_TARGET_SRCROOT/
+        if which swiftlint >/dev/null; then
+          swiftlint
+        else
+          echo "warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint"
+        fi
+        SCRIPT
+    }
+]
 end
