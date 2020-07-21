@@ -29,7 +29,7 @@ public struct UserDefault<T> {
 }
 
 public struct UserDefaultsConfig {
-
     @UserDefault("selected_categories", defaultValue: nil)
     static var selectedCategories: [String]?
+    // swiftlint:disable:previous let_var_whitespace
 }

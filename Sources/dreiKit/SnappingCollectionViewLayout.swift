@@ -10,9 +10,8 @@ import Foundation
 import UIKit.UICollectionViewLayout
 
 public class SnappingCollectionViewLayout: UICollectionViewFlowLayout {
-
-    public override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint,
-                                      withScrollingVelocity velocity: CGPoint) -> CGPoint {
+    override public func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint,
+                                             withScrollingVelocity velocity: CGPoint) -> CGPoint {
         guard let collectionView = collectionView else {
             return super.targetContentOffset(forProposedContentOffset: proposedContentOffset, withScrollingVelocity: velocity)
         }
@@ -25,12 +24,12 @@ public class SnappingCollectionViewLayout: UICollectionViewFlowLayout {
 
         let layoutAttributesArray = super.layoutAttributesForElements(in: targetRect)
 
-        layoutAttributesArray?.forEach({ (layoutAttributes) in
+        layoutAttributesArray?.forEach { layoutAttributes in
             let itemOffset: CGFloat = layoutAttributes.frame.origin.x
             if abs(itemOffset - horizontalOffset) < abs(offsetAdjustment) {
                 offsetAdjustment = itemOffset - horizontalOffset
             }
-        })
+        }
 
         return CGPoint(x: proposedContentOffset.x + offsetAdjustment, y: proposedContentOffset.y)
     }

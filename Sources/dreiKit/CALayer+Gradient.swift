@@ -17,9 +17,9 @@ public extension CALayer {
     }
 
     static func createGradient(size: CGSize,
-                                      colors: [CGColor],
-                                      locations: [NSNumber]? = [0, 1],
-                                      shouldRasterize: Bool = false) -> CAGradientLayer {
+                               colors: [CGColor],
+                               locations: [NSNumber]? = [0, 1],
+                               shouldRasterize: Bool = false) -> CAGradientLayer {
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = CGRect(x: .zero, y: .zero, width: size.width, height: size.height)
         gradientLayer.colors = colors

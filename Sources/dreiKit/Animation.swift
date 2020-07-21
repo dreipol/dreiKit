@@ -10,10 +10,9 @@ import UIKit.UIView
 
 public struct Animation {
     public static func spring(_ animation: @escaping (() -> Void),
-                       duration: TimeInterval = 0.3,
-                       options: UIView.AnimationOptions = [.allowUserInteraction, .beginFromCurrentState],
-                       completion: (() -> Void)? = nil
-    ) {
+                              duration: TimeInterval = 0.3,
+                              options: UIView.AnimationOptions = [.allowUserInteraction, .beginFromCurrentState],
+                              completion: (() -> Void)? = nil) {
         UIView.animate(withDuration: duration,
                        delay: 0,
                        usingSpringWithDamping: 1,
@@ -36,7 +35,7 @@ public struct Animation {
                         animation()
         }, completion: nil)
     }
-    
+
     public static func highlight(_ animation: @escaping (() -> Void), hightlight: Bool, completion: (() -> Void)? = nil) {
         UIView.animate(withDuration: hightlight ? 0 : 0.3,
                        delay: 0,
