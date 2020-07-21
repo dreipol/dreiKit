@@ -108,3 +108,17 @@ public extension UIView {
     }
 
 }
+
+public protocol ViewInit: class {
+    associatedtype InitData
+
+    func configure(with initData: InitData)
+}
+
+public extension ViewInit where Self: UIView {
+    static func autoLayout(with initData: InitData) -> Self {
+        let view = autoLayout()
+        view.configure(with: initData)
+        return view
+    }
+}
