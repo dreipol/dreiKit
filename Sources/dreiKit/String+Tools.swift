@@ -12,4 +12,12 @@ public extension String {
     var localized: String {
         return NSLocalizedString(self, tableName: nil, bundle: Bundle.main, value: "", comment: "")
     }
+
+    var isLocalized: Bool {
+        return self != localized
+    }
+
+    var localizedOptional: String? {
+        return isLocalized ? localized : nil
+    }
 }
