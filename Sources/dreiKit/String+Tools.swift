@@ -20,4 +20,10 @@ public extension String {
     var localizedOptional: String? {
         return isLocalized ? localized : nil
     }
+
+    func removingWhitespace() -> String {
+        var copy = self
+        copy.removeAll(where: { $0.unicodeScalars.allSatisfy({ NSCharacterSet.whitespaces.contains($0) }) })
+        return copy
+    }
 }
