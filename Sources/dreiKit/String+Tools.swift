@@ -22,6 +22,6 @@ public extension String {
     }
 
     func removingWhitespace() -> String {
-        return filter { !$0.isWhitespace}
+        return filter { !$0.isWhitespace }
     }
 }
