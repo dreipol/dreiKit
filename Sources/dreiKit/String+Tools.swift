@@ -22,8 +22,6 @@ public extension String {
     }
 
     func removingWhitespace() -> String {
-        var copy = self
-        copy.removeAll(where: { $0.unicodeScalars.allSatisfy({ NSCharacterSet.whitespaces.contains($0) }) })
-        return copy
+        return filter { !$0.isWhitespace}
     }
 }
