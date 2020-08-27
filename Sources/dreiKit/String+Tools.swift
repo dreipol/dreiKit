@@ -20,4 +20,8 @@ public extension String {
     var localizedOptional: String? {
         return isLocalized ? localized : nil
     }
+
+    func removingWhitespace() -> String {
+        return filter { !$0.isWhitespace }
+    }
 }
