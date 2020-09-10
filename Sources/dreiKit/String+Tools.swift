@@ -24,4 +24,16 @@ public extension String {
     func removingWhitespace() -> String {
         return filter { !$0.isWhitespace }
     }
+
+    func universalDecimal() -> Double? {
+        let pointFormatter = NumberFormatter()
+        pointFormatter.decimalSeparator = "."
+        let commaFormatter = NumberFormatter()
+        commaFormatter.decimalSeparator = ","
+        var decimalValue = pointFormatter.number(from: self)?.doubleValue
+        if decimalValue == nil {
+            decimalValue = commaFormatter.number(from: self)?.doubleValue
+        }
+        return decimalValue
+    }
 }
