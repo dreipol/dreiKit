@@ -7,10 +7,11 @@
 
 import UIKit
 
-private let headerTag = 0x4eade9
-
 public class StickyHeadersStackView: UIScrollView {
     let stackView = UIStackView.autoLayout(axis: .vertical)
+
+    private var tagCounter = 0x4eade9
+    private var headerTags = Set<Int>()
 
     public init() {
         super.init(frame: .zero)
@@ -30,7 +31,10 @@ public class StickyHeadersStackView: UIScrollView {
     }
 
     public func addHeader(_ header: UIView) {
-        header.tag = headerTag
+        header.tag = tagCounter
+        headerTags.insert(tagCounter)
+        tagCounter += 1
+
         stackView.addArrangedSubview(header)
     }
 
@@ -46,7 +50,7 @@ extension StickyHeadersStackView: UIScrollViewDelegate {
         var height: CGFloat = 0
 
         for subview in stackView.arrangedSubviews {
-            if subview.tag == headerTag {
+            if headerTags.contains(subview.tag) {
                 if height <= scrollView.contentOffset.y || scrollView.contentOffset.y < 0 {
                     lastHeader = subview
                 } else {
