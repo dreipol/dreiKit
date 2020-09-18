@@ -8,6 +8,8 @@
 import UIKit
 
 open class DefaultBehaviorTextFieldDelegate: NSObject, UITextFieldDelegate {
+    public static let shared = DefaultBehaviorTextFieldDelegate()
+
     public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
