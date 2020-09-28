@@ -17,17 +17,12 @@ public extension UIStackView {
         return stackView
     }
 
-    func addSpace(_ height: CGFloat) {
-        // Seams fixed for now with iOS 13.2 SDK
-        if let view = arrangedSubviews.last {
-            setCustomSpacing(height, after: view)
-        } else {
-            let view = UIView()
-            view.isUserInteractionEnabled = false
-            let anchor = self.axis == .horizontal ? view.widthAnchor : view.heightAnchor
-            anchor.constraint(equalToConstant: height).isActive = true
-            addArrangedSubview(view)
-        }
+    func addSpace(_ space: CGFloat) {
+        let view = UIView.autoLayout()
+        view.isUserInteractionEnabled = false
+        let anchor = axis == .horizontal ? view.widthAnchor : view.heightAnchor
+        anchor.constraint(equalToConstant: space).isActive = true
+        addArrangedSubview(view)
     }
 
     func removeArrangedView(_ view: UIView) {
