@@ -17,11 +17,11 @@ public extension UIStackView {
         return stackView
     }
 
-    func addSpace(_ height: CGFloat) {
-        let view = UIView()
+    func addSpace(_ space: CGFloat) {
+        let view = UIView.autoLayout()
         view.isUserInteractionEnabled = false
-        let anchor = self.axis == .horizontal ? view.widthAnchor : view.heightAnchor
-        anchor.constraint(equalToConstant: height).isActive = true
+        let anchor = axis == .horizontal ? view.widthAnchor : view.heightAnchor
+        anchor.constraint(equalToConstant: space).isActive = true
         addArrangedSubview(view)
     }
 
