@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension UIViewController {
+public extension UIViewController {
     /**
      Show directions. If Google Maps is installed lets user choose which app to use.
 
@@ -17,7 +17,7 @@ extension UIViewController {
      - Parameter from: starting point for the navigation or nil if current locaiton should be used
      - Parameter to: destination for the navigation
     */
-    func showStreetDirections(from: String?, to: String) {
+    func showStreetDirections(from: String?, to: String, appChoicePrompt: String) {
         let from = from?.replacingOccurrences(of: " ", with: "+").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         guard let to = to.replacingOccurrences(of: " ", with: "+").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
             return
@@ -35,8 +35,7 @@ extension UIViewController {
         }
 
         if UIApplication.shared.canOpenURL(googleURL) {
-            // TODO: localize
-            let picker = UIAlertController(title: "Choose", message: nil, preferredStyle: .actionSheet)
+            let picker = UIAlertController(title: appChoicePrompt, message: nil, preferredStyle: .actionSheet)
             picker.addAction(UIAlertAction(title: "Apple Maps", style: .default, handler: { _ in
                 UIApplication.shared.open(appleURL, options: [:], completionHandler: nil)
             }))
