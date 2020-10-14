@@ -1,5 +1,5 @@
 //
-//  UIViewController+StreetNavigation.swift
+//  StreetNavigationManager.swift
 //  Transport
 //
 //  Created by Nils Becker on 08.10.20.
@@ -8,7 +8,13 @@
 
 import UIKit
 
-public extension UIViewController {
+public struct StreetNavigationManager {
+    weak var viewController: UIViewController?
+
+    public init(viewController: UIViewController) {
+        self.viewController = viewController
+    }
+
     /**
      Show directions. If Google Maps is installed lets user choose which app to use.
 
@@ -16,8 +22,9 @@ public extension UIViewController {
 
      - Parameter from: starting point for the navigation or nil if current locaiton should be used
      - Parameter to: destination for the navigation
+     - Parameter appChoicePrompt: title for action sheet when choosing between Apple Maps and Google Maps
     */
-    func showStreetDirections(from: String?, to: String, appChoicePrompt: String) {
+    public func showStreetDirections(from: String?, to: String, appChoicePrompt: String) {
         let from = from?.replacingOccurrences(of: " ", with: "+").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         guard let to = to.replacingOccurrences(of: " ", with: "+").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
             return
@@ -42,7 +49,7 @@ public extension UIViewController {
             picker.addAction(UIAlertAction(title: "Google Maps", style: .default, handler: { _ in
                 UIApplication.shared.open(googleURL, options: [:], completionHandler: nil)
             }))
-            present(picker, animated: true, completion: nil)
+            viewController?.present(picker, animated: true, completion: nil)
         } else {
             UIApplication.shared.open(appleURL, options: [:], completionHandler: nil)
         }
