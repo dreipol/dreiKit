@@ -24,17 +24,18 @@ public struct StreetNavigationManager {
      - Parameter to: destination for the navigation
      - Parameter appChoicePrompt: title for action sheet when choosing between Apple Maps and Google Maps
     */
-    public func showStreetDirections(from: String?, to: String, appChoicePrompt: String) {
-        let from = from?.replacingOccurrences(of: " ", with: "+").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-        guard let to = to.replacingOccurrences(of: " ", with: "+").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
+    public func showStreetDirections(from: Address?, to: Address, appChoicePrompt: String) {
+        let formatter = AddressFormatter()
+        guard let toEncoded = formatter.queryEncodedString(address: to) else {
             return
         }
 
-        var appleURLString = "https://maps.apple.com/?daddr=\(to)&dirflg=d"
-        var googleURLString = "comgooglemaps://?daddr=\(to)&directionsmode=driving"
-        if let from = from {
-            appleURLString += "&saddr=\(from)"
-            googleURLString += "&saddr=\(from)"
+        var appleURLString = "https://maps.apple.com/?daddr=\(toEncoded)&dirflg=d"
+        var googleURLString = "comgooglemaps://?daddr=\(toEncoded)&directionsmode=driving"
+        if let from = from,
+           let fromEncoded = formatter.queryEncodedString(address: from) {
+            appleURLString += "&saddr=\(fromEncoded)"
+            googleURLString += "&saddr=\(fromEncoded)"
         }
         guard let appleURL = URL(string: appleURLString),
               let googleURL = URL(string: googleURLString) else {

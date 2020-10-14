@@ -34,4 +34,9 @@ public final class AddressFormatter {
     public func string(forSearch address: Address) -> String {
         "\(address.street ?? ""), \(address.zip ?? "") \(address.city ?? ""), \(address.country ?? "")"
     }
+
+    func queryEncodedString(address: Address) -> String? {
+        let query = string(forSearch: address)
+        return query.replacingOccurrences(of: " ", with: "+").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+    }
 }
