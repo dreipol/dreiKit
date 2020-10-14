@@ -29,8 +29,6 @@ open class DefaultBehaviorTextFieldDelegate: NSObject, UITextFieldDelegate {
 }
 
 public final class KeyboardValidationTextFieldDelegate: DefaultBehaviorTextFieldDelegate {
-    public static let shared = KeyboardValidationTextFieldDelegate()
-
     public override func isValid(text: String, in textField: UITextField) -> Bool {
         var validationString = text
         switch textField.keyboardType {
@@ -49,8 +47,6 @@ public final class KeyboardValidationTextFieldDelegate: DefaultBehaviorTextField
 }
 
 public final class CurrencyValidationTextFieldDelegate: DefaultBehaviorTextFieldDelegate {
-    public static let shared = CurrencyValidationTextFieldDelegate()
-
     public override func isValid(text: String, in textField: UITextField) -> Bool {
         var subUnits = text.drop(while: { $0.isNumber })
         if let separator = subUnits.first, separator == "." || separator == "," {
