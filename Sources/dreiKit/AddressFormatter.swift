@@ -14,6 +14,14 @@ public struct Address {
     let zip: String?
     let city: String?
     let country: String?
+
+    public init(name: String?, street: String?, zip: String?, city: String?, country: String?) {
+        self.name = name
+        self.street = street
+        self.zip = zip
+        self.city = city
+        self.country = country
+    }
 }
 
 public final class AddressFormatter {
