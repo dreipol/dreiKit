@@ -15,6 +15,22 @@ public struct StreetNavigationManager {
         self.viewController = viewController
     }
 
+    private func pickMapsApp(urls: [String: URL], prompt: String, cancelTitle: String) {
+        let picker = UIAlertController(title: prompt, message: nil, preferredStyle: .actionSheet)
+
+        for (appName, url) in urls {
+            picker.addAction(UIAlertAction(title: appName, style: .default, handler: { _ in
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }))
+        }
+
+        picker.addAction(UIAlertAction(title: cancelTitle, style: .cancel, handler: { [weak picker] _ in
+            picker?.dismiss(animated: true, completion: nil)
+        }))
+
+        viewController?.present(picker, animated: true, completion: nil)
+    }
+
     /**
      Show directions. If Google Maps is installed lets user choose which app to use.
 
@@ -24,7 +40,7 @@ public struct StreetNavigationManager {
      - Parameter to: destination for the navigation
      - Parameter appChoicePrompt: title for action sheet when choosing between Apple Maps and Google Maps
     */
-    public func showStreetDirections(from: Address?, to: Address, appChoicePrompt: String) {
+    public func showStreetDirections(from: Address?, to: Address, appChoicePrompt: String, cancelTitle: String) {
         let formatter = AddressFormatter()
         guard let toEncoded = formatter.queryEncodedString(address: to) else {
             return
@@ -43,14 +59,7 @@ public struct StreetNavigationManager {
         }
 
         if UIApplication.shared.canOpenURL(googleURL) {
-            let picker = UIAlertController(title: appChoicePrompt, message: nil, preferredStyle: .actionSheet)
-            picker.addAction(UIAlertAction(title: "Apple Maps", style: .default, handler: { _ in
-                UIApplication.shared.open(appleURL, options: [:], completionHandler: nil)
-            }))
-            picker.addAction(UIAlertAction(title: "Google Maps", style: .default, handler: { _ in
-                UIApplication.shared.open(googleURL, options: [:], completionHandler: nil)
-            }))
-            viewController?.present(picker, animated: true, completion: nil)
+            pickMapsApp(urls: ["Apple Maps": appleURL, "Google Maps": googleURL], prompt: appChoicePrompt, cancelTitle: cancelTitle)
         } else {
             UIApplication.shared.open(appleURL, options: [:], completionHandler: nil)
         }
