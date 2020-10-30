@@ -28,7 +28,8 @@ Pod::Spec.new do |s|
         :execution_position => :before_compile,
         :shell_path => '/bin/sh',
         :script => <<-SCRIPT
-        cd $PODS_TARGET_SRCROOT/
+        cd "$PODS_TARGET_SRCROOT/"
+        
         if which swiftlint >/dev/null; then
           swiftlint
         else
