@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit.UIButton
 
 public extension UIButton {
     func setImagePadding(_ padding: CGFloat) {
