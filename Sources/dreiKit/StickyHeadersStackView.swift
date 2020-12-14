@@ -41,6 +41,18 @@ public class StickyHeadersStackView: UIScrollView {
     public func addSpace(_ height: CGFloat) {
         stackView.addSpace(height)
     }
+
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+
+        contentSize = stackView.frame.size
+    }
+
+    public override func scrollRectToVisible(_ rect: CGRect, animated: Bool) {
+        let headerOffset = stackView.arrangedSubviews.prefix(while: { $0.frame.minY <= rect.minY })
+            .last(where: { headerTags.contains($0.tag) })?.frame.height ?? 0
+        super.scrollRectToVisible(rect.inset(by: UIEdgeInsets(top: -headerOffset, left: 0, bottom: 0, right: 0)), animated: animated)
+    }
 }
 
 extension StickyHeadersStackView: UIScrollViewDelegate {
