@@ -8,9 +8,44 @@
 import UIKit
 
 open class DefaultBehaviorTextFieldDelegate: NSObject, UITextFieldDelegate {
-    public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
+    weak open var forwardingDelegate: UITextFieldDelegate?
+
+    open func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if let returnHandler = forwardingDelegate?.textFieldShouldReturn {
+            return returnHandler(textField)
+        } else {
+            textField.resignFirstResponder()
+            return true
+        }
+    }
+
+    open func textFieldDidEndEditing(_ textField: UITextField) {
+        forwardingDelegate?.textFieldDidEndEditing?(textField)
+    }
+
+    open func textFieldDidBeginEditing(_ textField: UITextField) {
+        forwardingDelegate?.textFieldDidBeginEditing?(textField)
+    }
+
+    @available(iOS 13, *)
+    open func textFieldDidChangeSelection(_ textField: UITextField) {
+        forwardingDelegate?.textFieldDidChangeSelection?(textField)
+    }
+
+    open func textFieldShouldClear(_ textField: UITextField) -> Bool {
+        return forwardingDelegate?.textFieldShouldClear?(textField) ?? true
+    }
+
+    open func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        return forwardingDelegate?.textFieldShouldEndEditing?(textField) ?? true
+    }
+
+    open func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        return forwardingDelegate?.textFieldShouldBeginEditing?(textField) ?? true
+    }
+
+    open func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
+        forwardingDelegate?.textFieldDidEndEditing?(textField, reason: reason)
     }
 
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
