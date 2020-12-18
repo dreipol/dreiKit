@@ -9,6 +9,9 @@
 import UIKit
 
 public extension UIView {
+    enum Error: Swift.Error {
+        case frameTranslationNotASuperview
+    }
 
     class func verticalLine() -> UIView {
         let view = UIView.autoLayout()
@@ -30,6 +33,32 @@ public extension UIView {
             view.alpha = alpha
         }
         backgroundColor = .random
+    }
+
+    func frame(in view: UIView) throws -> CGRect {
+        var current: UIView = self
+        var frame = bounds
+        while current !== view {
+            frame = frame.offsetBy(dx: current.frame.minX, dy: current.frame.minY)
+
+            guard let superview = current.superview else {
+                throw Error.frameTranslationNotASuperview
+            }
+            current = superview
+        }
+
+        return frame
+    }
+
+    func frameInRootView() -> CGRect {
+        var current: UIView = self
+        var frame = bounds
+        while let superview = current.superview {
+            frame = frame.offsetBy(dx: current.frame.minX, dy: current.frame.minY)
+            current = superview
+        }
+
+        return frame
     }
 }
 
