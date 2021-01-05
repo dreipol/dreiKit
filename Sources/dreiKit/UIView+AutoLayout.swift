@@ -61,15 +61,15 @@ public extension UIView {
             ])
     }
 
-    func fillSuperviewMargins() {
+    func fillSuperviewMargins(edgeInsets: NSDirectionalEdgeInsets = .zero) {
         guard let view = superview else {
             return
         }
         NSLayoutConstraint.activate([
-            leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
-            trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
-            topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor),
-            bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor),
+            leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor, constant: edgeInsets.leading),
+            trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor, constant: -edgeInsets.trailing),
+            topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: edgeInsets.top),
+            bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor, constant: -edgeInsets.bottom),
             ])
     }
 
