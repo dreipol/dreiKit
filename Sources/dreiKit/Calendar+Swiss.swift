@@ -12,7 +12,7 @@ public extension Calendar {
         var calendar = Calendar(identifier: .gregorian)
         // swiftlint:disable:next force_unwrapping
         calendar.timeZone = TimeZone(identifier: "CET")!
-        calendar.locale = Locale(identifier: "gsw_CH")
+        calendar.locale = Locale(identifier: identifier)
         return calendar
     }
 
