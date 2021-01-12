@@ -8,7 +8,10 @@
 import UIKit
 
 // https://stackoverflow.com/questions/43519969/uiactivityviewcontroller-chose-different-text-for-whatsapp-or-facebook/51029640
-private let imageOnlyActivityTypes: Set<String?> = ["net.whatsapp.WhatsApp.ShareExtension"]
+private let imageOnlyActivityTypes: Set<String?> = ["net.whatsapp.WhatsApp.ShareExtension",
+                                                    "com.facebook.Facebook.ShareExtension",
+                                                    "com.facebook.Messenger.ShareExtension",
+                                                    "com.burbn.instagram.shareextension"]
 
 public class WhatsAppConditonalActivityItem<T>: NSObject, UIActivityItemSource {
     public let item: T
