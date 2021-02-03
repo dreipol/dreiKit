@@ -10,14 +10,12 @@ import UIKit
 
 public struct StreetNavigationManager {
     weak private(set) var viewController: UIViewController?
-    let appPickerSourceView: UIView
 
-    public init(viewController: UIViewController, appPickerSourceView: UIView) {
+    public init(viewController: UIViewController) {
         self.viewController = viewController
-        self.appPickerSourceView = appPickerSourceView
     }
 
-    private func pickMapsApp(urls: [String: URL], prompt: String, cancelTitle: String) {
+    private func pickMapsApp(urls: [String: URL], prompt: String, cancelTitle: String, appPickerSourceView: UIView) {
         let picker = UIAlertController(title: prompt, message: nil, preferredStyle: .actionSheet)
         picker.popoverPresentationController?.sourceView = appPickerSourceView
 
@@ -43,7 +41,11 @@ public struct StreetNavigationManager {
      - Parameter to: destination for the navigation
      - Parameter appChoicePrompt: title for action sheet when choosing between Apple Maps and Google Maps
     */
-    public func showStreetDirections(from: Address?, to: Address, appChoicePrompt: String, cancelTitle: String) {
+    public func showStreetDirections(from: Address?,
+                                     to: Address,
+                                     appChoicePrompt: String,
+                                     cancelTitle: String,
+                                     appPickerSourceView: UIView) {
         let formatter = AddressFormatter()
         guard let toEncoded = formatter.queryEncodedString(address: to) else {
             return
@@ -62,7 +64,10 @@ public struct StreetNavigationManager {
         }
 
         if UIApplication.shared.canOpenURL(googleURL) {
-            pickMapsApp(urls: ["Apple Maps": appleURL, "Google Maps": googleURL], prompt: appChoicePrompt, cancelTitle: cancelTitle)
+            pickMapsApp(urls: ["Apple Maps": appleURL, "Google Maps": googleURL],
+                        prompt: appChoicePrompt,
+                        cancelTitle: cancelTitle,
+                        appPickerSourceView: appPickerSourceView)
         } else {
             UIApplication.shared.open(appleURL, options: [:], completionHandler: nil)
         }
