@@ -9,14 +9,17 @@
 import UIKit
 
 public struct StreetNavigationManager {
-    weak var viewController: UIViewController?
+    weak private(set) var viewController: UIViewController?
+    let appPickerSourceView: UIView
 
-    public init(viewController: UIViewController) {
+    public init(viewController: UIViewController, appPickerSourceView: UIView) {
         self.viewController = viewController
+        self.appPickerSourceView = appPickerSourceView
     }
 
     private func pickMapsApp(urls: [String: URL], prompt: String, cancelTitle: String) {
         let picker = UIAlertController(title: prompt, message: nil, preferredStyle: .actionSheet)
+        picker.popoverPresentationController?.sourceView = appPickerSourceView
 
         for (appName, url) in urls {
             picker.addAction(UIAlertAction(title: appName, style: .default, handler: { _ in
