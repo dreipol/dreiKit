@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "dreiKit"
-  s.version          = "1.0.1"
+  s.version          = "1.0.2"
   s.summary          = "A short description of dreiKit."
   s.homepage         = "https://github.com/dreipol/dreiKit"
   s.license          = { type: 'MIT', file: 'LICENSE' }
@@ -10,6 +10,7 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '11.0'
   s.requires_arc = true
   s.ios.source_files = 'Sources/dreiKit/**/*.{swift}'
+  s.preserve_path = '.swiftlint.yml'
   s.swift_version = '5.0'
   # s.resource_bundles = {
   #   'dreiKit' => ['dreiKit/Sources/**/*.xib']
