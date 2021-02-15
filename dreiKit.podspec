@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "dreiKit"
-  s.version          = "1.0.2"
+  s.version          = "1.0.3"
   s.summary          = "A short description of dreiKit."
   s.homepage         = "https://github.com/dreipol/dreiKit"
   s.license          = { type: 'MIT', file: 'LICENSE' }
