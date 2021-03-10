@@ -9,9 +9,7 @@ import UIKit.UIImage
 
 public extension UIImage {
     func withTintByMultiply(with color: UIColor) -> UIImage {
-        defer { UIGraphicsEndImageContext() }
-
-        UIGraphicsBeginImageContextWithOptions(size, false, UIScreen.main.scale)
+        UIGraphicsBeginImageContextWithOptions(size, false, UIScreen.main.scale); defer { UIGraphicsEndImageContext() }
         guard let context = UIGraphicsGetCurrentContext(), let cgImage = cgImage else {
             return self
         }
@@ -45,21 +43,16 @@ public extension UIImage {
         let newWidth = size.width + 2 * x
         let newHeight = size.height + 2 * y
         let newSize = CGSize(width: newWidth, height: newHeight)
-        UIGraphicsBeginImageContextWithOptions(newSize, false, 0)
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 0); defer { UIGraphicsEndImageContext() }
         let origin = CGPoint(x: (newWidth - size.width) / 2, y: (newHeight - size.height) / 2)
         draw(at: origin)
-        let imageWithPadding = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-
-        return imageWithPadding
+        return UIGraphicsGetImageFromCurrentImageContext()
     }
 
     func doubleHeight() -> UIImage {
-        defer { UIGraphicsEndImageContext() }
-
         let newHeight = size.height * 2
         let newSize = CGSize(width: size.width, height: newHeight)
-        UIGraphicsBeginImageContextWithOptions(newSize, false, 0)
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 0); defer { UIGraphicsEndImageContext() }
         let origin = CGPoint(x: 0, y: 0)
         draw(at: origin)
         guard let newImage = UIGraphicsGetImageFromCurrentImageContext() else {
