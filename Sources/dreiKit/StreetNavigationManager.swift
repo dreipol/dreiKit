@@ -41,20 +41,18 @@ public struct StreetNavigationManager {
      - Parameter to: destination for the navigation
      - Parameter appChoicePrompt: title for action sheet when choosing between Apple Maps and Google Maps
     */
-    public func showStreetDirections(from: Address?,
-                                     to: Address,
+    public func showStreetDirections(from: QueryEncodableAddress? = nil,
+                                     to: QueryEncodableAddress,
                                      appChoicePrompt: String,
                                      cancelTitle: String,
                                      appPickerSourceView: UIView) {
-        let formatter = AddressFormatter()
-        guard let toEncoded = formatter.queryEncodedString(address: to) else {
+        guard let toEncoded = to.queryEncodedString() else {
             return
         }
 
         var appleURLString = "https://maps.apple.com/?daddr=\(toEncoded)&dirflg=d"
         var googleURLString = "comgooglemaps://?daddr=\(toEncoded)&directionsmode=driving"
-        if let from = from,
-           let fromEncoded = formatter.queryEncodedString(address: from) {
+        if let fromEncoded = from?.queryEncodedString() {
             appleURLString += "&saddr=\(fromEncoded)"
             googleURLString += "&saddr=\(fromEncoded)"
         }
