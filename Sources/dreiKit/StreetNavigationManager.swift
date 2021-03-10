@@ -8,6 +8,24 @@
 
 import UIKit
 
+public enum DirectionMode: String {
+    case driving, transit, bicycling, walking
+
+    var googleMaps: String { self.rawValue.lowercased() }
+    var appleMaps: String {
+        switch self {
+        case .driving:
+            return "d"
+        case .transit:
+            return "r"
+        case .bicycling:
+            return "c"
+        case .walking:
+            return "w"
+        }
+    }
+}
+
 public struct StreetNavigationManager {
     weak private(set) var viewController: UIViewController?
 
@@ -43,6 +61,7 @@ public struct StreetNavigationManager {
     */
     public func showStreetDirections(from: QueryEncodableAddress? = nil,
                                      to: QueryEncodableAddress,
+                                     directionMode: DirectionMode = .driving,
                                      appChoicePrompt: String,
                                      cancelTitle: String,
                                      appPickerSourceView: UIView) {
@@ -50,8 +69,8 @@ public struct StreetNavigationManager {
             return
         }
 
-        var appleURLString = "https://maps.apple.com/?daddr=\(toEncoded)&dirflg=d"
-        var googleURLString = "comgooglemaps://?daddr=\(toEncoded)&directionsmode=driving"
+        var appleURLString = "https://maps.apple.com/?daddr=\(toEncoded)&dirflg=\(directionMode.appleMaps)"
+        var googleURLString = "comgooglemaps://?daddr=\(toEncoded)&directionsmode=\(directionMode.googleMaps)"
         if let fromEncoded = from?.queryEncodedString() {
             appleURLString += "&saddr=\(fromEncoded)"
             googleURLString += "&saddr=\(fromEncoded)"
