@@ -19,9 +19,12 @@ public struct FillConstraints {
 
 public extension UIView {
     class func autoLayout() -> Self {
-        let view = self.init(frame: .zero)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
+        return self.init(frame: .zero).autolayout()
+    }
+
+    func autolayout() -> Self {
+        translatesAutoresizingMaskIntoConstraints = false
+        return self
     }
 
     func activateConstraints(
