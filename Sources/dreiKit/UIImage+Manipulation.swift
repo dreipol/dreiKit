@@ -61,22 +61,4 @@ public extension UIImage {
 
         return newImage
     }
-
-    func transparentImageBackgroundTo(_ color: UIColor) -> UIImage {
-        defer { UIGraphicsEndImageContext() }
-        UIGraphicsBeginImageContextWithOptions(size, false, scale)
-        let imageRect = CGRect(x: 0.0, y: 0.0, width: size.width, height: size.height)
-        guard let ctx = UIGraphicsGetCurrentContext() else {
-            return self
-        }
-        ctx.setFillColor(color.cgColor)
-//        ctx.setFillColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-        ctx.fill(imageRect)
-        // Apply the source self's alpha
-        draw(in: imageRect, blendMode: .normal, alpha: 1.0)
-        guard let newImage = UIGraphicsGetImageFromCurrentImageContext() else {
-            return self
-        }
-        return newImage
-    }
 }
