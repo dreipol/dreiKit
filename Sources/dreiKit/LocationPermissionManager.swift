@@ -27,7 +27,7 @@ public class LocationPermissionManager: NSObject, CLLocationManagerDelegate {
         manager.delegate = self
     }
 
-    public func requestPermission(callback: @escaping (CLAuthorizationStatus) -> Void) {
+    public func requestPermissionIfNeeded(callback: @escaping (CLAuthorizationStatus) -> Void) {
         guard CLLocationManager.authorizationStatus() == .notDetermined else {
             callback(CLLocationManager.authorizationStatus())
             return
