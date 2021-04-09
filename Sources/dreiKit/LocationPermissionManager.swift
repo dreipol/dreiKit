@@ -28,8 +28,9 @@ public class LocationPermissionManager: NSObject, CLLocationManagerDelegate {
     }
 
     public func requestPermissionIfNeeded(callback: @escaping (CLAuthorizationStatus) -> Void) {
-        guard CLLocationManager.authorizationStatus() == .notDetermined else {
-            callback(CLLocationManager.authorizationStatus())
+        let status = CLLocationManager.authorizationStatus()
+        guard status == .notDetermined else {
+            callback(status)
             return
         }
         callbacks.append(callback)
