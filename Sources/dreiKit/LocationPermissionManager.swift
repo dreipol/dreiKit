@@ -7,6 +7,17 @@
 
 import CoreLocation
 
+public extension CLAuthorizationStatus {
+    var isLocationAvailable: Bool {
+        switch self {
+        case .authorizedAlways, .authorizedWhenInUse, .authorized:
+            return true
+        default:
+            return false
+        }
+    }
+}
+
 public class LocationPermissionManager: NSObject, CLLocationManagerDelegate {
     let manager = CLLocationManager()
     var callbacks = [(CLAuthorizationStatus) -> Void]()
