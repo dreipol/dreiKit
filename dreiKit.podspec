@@ -9,14 +9,10 @@ Pod::Spec.new do |s|
   s.social_media_url = 'https://twitter.com/dreipol'
   s.ios.deployment_target = '11.0'
   s.requires_arc = true
-  s.ios.source_files = 'Sources/dreiKit/**/*.{swift}'
   s.preserve_path = '.swiftlint.yml'
   s.swift_version = '5.0'
-  # s.resource_bundles = {
-  #   'dreiKit' => ['dreiKit/Sources/**/*.xib']
-  # }
   s.ios.frameworks = 'UIKit', 'Foundation'
-  # s.dependency 'Eureka', '~> 4.0'
+  s.ios.source_files = 'Sources/dreiKit/**/*.{swift}'
   s.info_plist = {
     'CFBundleIdentifier' => 'ch.dreipol.dreikit'
   }
