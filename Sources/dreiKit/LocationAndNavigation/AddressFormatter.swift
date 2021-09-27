@@ -53,11 +53,11 @@ extension Address: QueryEncodableAddress {
 public final class AddressFormatter {
     private init() {}
 
-    static func string(forDisplaying address: Address) -> String {
+    public static func string(forDisplaying address: Address) -> String {
         "\(address.name ?? ""), \(address.street ?? "")\n\(address.zip ?? "") \(address.city ?? "")"
     }
 
-    static func string(forSearch address: Address) -> String {
+    public static func string(forSearch address: Address) -> String {
         "\(address.street ?? ""), \(address.zip ?? "") \(address.city ?? ""), \(address.country ?? "")"
     }
 }
