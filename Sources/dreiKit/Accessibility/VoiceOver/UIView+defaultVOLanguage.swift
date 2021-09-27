@@ -16,13 +16,15 @@ private enum AssociatedObjectKey {
 public extension UIView {
     static var defaultAccessibilityLanguage: String! {
         didSet {
+            // TODO: only works while voice over is enabled
             assert(swizzled, "Failed to swizzle accessibility language")
         }
     }
 
     // implicitly lazy => dispatch_once
     private static var swizzled: Bool = {
-        guard let defaultingMethod = class_getInstanceMethod(UIView.self, #selector(swizzled_accessibilityLanguage)) else {
+        guard let defaultingMethod = class_getInstanceMethod(UIView.self, #selector(swizzled_accessibilityLanguage)),
+              let originalMethod = class_getInstanceMethod(UIView.self, #selector(accessibilityLanguage)) else {
             return false
         }
         let implementation = method_getImplementation(defaultingMethod)
