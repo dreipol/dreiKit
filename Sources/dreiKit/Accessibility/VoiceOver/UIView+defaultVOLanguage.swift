@@ -16,7 +16,6 @@ private enum AssociatedObjectKey {
 public extension UIView {
     static var defaultAccessibilityLanguage: String! {
         didSet {
-            // TODO: only works while voice over is enabled
             assert(swizzled, "Failed to swizzle accessibility language")
         }
     }
@@ -29,9 +28,9 @@ public extension UIView {
         }
         let implementation = method_getImplementation(defaultingMethod)
         let types = method_getTypeEncoding(defaultingMethod)
-        guard let overrideImpl = class_replaceMethod(UIView.self, #selector(accessibilityLanguage), implementation, types) else {
-            return false
-        }
+        let overrideImpl = method_getImplementation(originalMethod)
+
+        _ = class_replaceMethod(UIView.self, #selector(accessibilityLanguage), implementation, types)
         _ = class_replaceMethod(UIView.self, #selector(overrideAccessibiltyLanguage), overrideImpl, types)
         return true
     }()
