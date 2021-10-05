@@ -40,4 +40,9 @@ public extension String {
         }
         return decimalValue
     }
+
+    func forVoiceOver(languageCode: String? = nil) -> NSAttributedString {
+        let language = languageCode ?? UIView.defaultAccessibilityLanguage
+        return NSAttributedString(string: self, attributes: [.accessibilitySpeechLanguage: language as Any])
+    }
 }
