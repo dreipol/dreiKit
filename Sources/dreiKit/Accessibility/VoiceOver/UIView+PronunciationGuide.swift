@@ -96,7 +96,7 @@ public extension UIView {
 
 extension NSMutableAttributedString {
     func applyPronunciationGuide() -> NSAttributedString {
-        guard let wordRegex = try? NSRegularExpression(pattern: "\\w+", options: []) else {
+        guard let wordRegex = try? NSRegularExpression(pattern: "\\w+", options: []), length > 0 else {
             return self
         }
 
