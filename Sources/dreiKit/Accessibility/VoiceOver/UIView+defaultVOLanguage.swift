@@ -7,12 +7,6 @@
 
 import UIKit
 
-private enum AssociatedObjectKey {
-    case overrideAccessibiltyLanguage
-
-    static var overrideAccessibiltyLanguageKey = AssociatedObjectKey.overrideAccessibiltyLanguage
-}
-
 public extension UIView {
     static var defaultAccessibilityLanguage: String! {
         didSet {

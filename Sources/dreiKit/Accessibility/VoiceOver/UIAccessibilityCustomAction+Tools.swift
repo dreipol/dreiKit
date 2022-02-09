@@ -8,8 +8,11 @@
 import UIKit
 
 public extension UIAccessibilityCustomAction {
-    static func localized(key: String, _ args: String..., languageCode: String? = nil, action: @escaping Handler) -> UIAccessibilityCustomAction {
-        let pronouncable = String(format: key.localized, args).forVoiceOver(languageCode: languageCode)
-        return UIAccessibilityCustomAction(attributedName: pronouncable, actionHandler: action)
+    static func localized(key: String,
+                          _ args: String...,
+                          languageCode: String? = nil,
+                          action: @escaping Handler) -> UIAccessibilityCustomAction {
+        let pronounceable = String(format: key.localized, args).forVoiceOver(languageCode: languageCode)
+        return UIAccessibilityCustomAction(attributedName: pronounceable, actionHandler: action)
     }
 }

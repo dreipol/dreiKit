@@ -43,6 +43,7 @@ public extension String {
 
     func forVoiceOver(languageCode: String? = nil) -> NSAttributedString {
         let language = languageCode ?? UIView.defaultAccessibilityLanguage
-        return NSAttributedString(string: self, attributes: [.accessibilitySpeechLanguage: language as Any])
+        return NSMutableAttributedString(string: self, attributes: [.accessibilitySpeechLanguage: language as Any])
+            .applyPronunciationGuide()
     }
 }
