@@ -16,6 +16,12 @@ public extension UIView {
         }
     }
 
+    static var abbreviations: [String: String] = [:] {
+        didSet {
+            assert(swizzled, "Failed to swizzle pronunciation guide")
+        }
+    }
+
     // implicitly lazy => dispatch_once
     private static var swizzled: Bool = {
         guard let labelNew = class_getInstanceMethod(UIView.self, #selector(swizzled_accessibilityAttributedLabel)),
@@ -102,13 +108,15 @@ extension NSMutableAttributedString {
 
         let attributes = attributes(at: 0, effectiveRange: nil)
         wordRegex.mapMatches(onString: self) { word, _ in
-            guard let pronunciation = UIView.pronunciationGuide[word] else {
-                return NSAttributedString(string: word, attributes: attributes)
+            let fullWord = UIView.abbreviations[word] ?? word
+
+            guard let pronunciation = UIView.pronunciationGuide[fullWord] else {
+                return NSAttributedString(string: fullWord, attributes: attributes)
             }
 
             var resolvedAttributes = attributes
             resolvedAttributes[.accessibilitySpeechIPANotation] = pronunciation
-            return NSAttributedString(string: word.lowercased(), attributes: resolvedAttributes)
+            return NSAttributedString(string: fullWord.lowercased(), attributes: resolvedAttributes)
         }
 
         return self
