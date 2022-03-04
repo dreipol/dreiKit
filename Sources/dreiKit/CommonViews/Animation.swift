@@ -25,7 +25,7 @@ public struct Animation {
         })
     }
 
-    public static func appearance(_ animation: @escaping (() -> Void)) {
+    public static func appearance(_ animation: @escaping (() -> Void), completion: ((Bool) -> Void)? = nil) {
         UIView.animate(withDuration: 0.3,
                        delay: 0,
                        usingSpringWithDamping: 1,
@@ -33,7 +33,7 @@ public struct Animation {
                        options: [.allowUserInteraction, .beginFromCurrentState],
                        animations: {
                         animation()
-        }, completion: nil)
+        }, completion: completion)
     }
 
     public static func highlight(_ animation: @escaping (() -> Void), hightlight: Bool, completion: (() -> Void)? = nil) {
