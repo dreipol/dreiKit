@@ -13,19 +13,21 @@ public extension UIView {
             assert(swizzled, "Failed to swizzle accessibility language")
         }
     }
+}
 
+private extension NSObject {
     // implicitly lazy => dispatch_once
-    private static var swizzled: Bool = {
-        guard let defaultingMethod = class_getInstanceMethod(UIView.self, #selector(swizzled_accessibilityLanguage)),
-              let originalMethod = class_getInstanceMethod(UIView.self, #selector(accessibilityLanguage)) else {
+    static var swizzled: Bool = {
+        guard let defaultingMethod = class_getInstanceMethod(NSObject.self, #selector(swizzled_accessibilityLanguage)),
+              let originalMethod = class_getInstanceMethod(NSObject.self, #selector(accessibilityLanguage)) else {
             return false
         }
         let implementation = method_getImplementation(defaultingMethod)
         let types = method_getTypeEncoding(defaultingMethod)
         let overrideImpl = method_getImplementation(originalMethod)
 
-        _ = class_replaceMethod(UIView.self, #selector(accessibilityLanguage), implementation, types)
-        _ = class_replaceMethod(UIView.self, #selector(overrideAccessibiltyLanguage), overrideImpl, types)
+        _ = class_replaceMethod(NSObject.self, #selector(accessibilityLanguage), implementation, types)
+        _ = class_replaceMethod(NSObject.self, #selector(overrideAccessibiltyLanguage), overrideImpl, types)
         return true
     }()
 
@@ -34,7 +36,7 @@ public extension UIView {
             return overrideAccessibilityLanguage
         }
 
-        return Self.defaultAccessibilityLanguage
+        return UIView.defaultAccessibilityLanguage
     }
 
     @objc private func overrideAccessibiltyLanguage() -> String? {

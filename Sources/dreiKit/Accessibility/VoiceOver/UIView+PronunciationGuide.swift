@@ -7,7 +7,7 @@
 
 import UIKit
 
-private typealias ObjCFunctionCallable = @convention(c) (UIView, Selector) -> NSObject?
+private typealias ObjCFunctionCallable = @convention(c) (NSObject, Selector) -> NSObject?
 
 public extension UIView {
     static var pronunciationGuide: [String: String] = [:] {
@@ -21,17 +21,19 @@ public extension UIView {
             assert(swizzled, "Failed to swizzle pronunciation guide")
         }
     }
+}
 
+private extension NSObject {
     // implicitly lazy => dispatch_once
-    private static var swizzled: Bool = {
-        guard let labelNew = class_getInstanceMethod(UIView.self, #selector(swizzled_accessibilityAttributedLabel)),
-              let labelOld = class_getInstanceMethod(UIView.self, #selector(accessibilityAttributedLabel)),
-              let valueNew = class_getInstanceMethod(UIView.self, #selector(swizzled_accessibilityAttributedValue)),
-              let valueOld = class_getInstanceMethod(UIView.self, #selector(accessibilityAttributedValue)),
-              let hintNew = class_getInstanceMethod(UIView.self, #selector(swizzled_accessibilityAttributedHint)),
-              let hintOld = class_getInstanceMethod(UIView.self, #selector(accessibilityAttributedHint)),
-              let userInputLabelsNew = class_getInstanceMethod(UIView.self, #selector(swizzled_accessibilityAttributedUserInputLabels)),
-              let userInputLabelsOld = class_getInstanceMethod(UIView.self, #selector(accessibilityAttributedUserInputLabels)) else {
+    static var swizzled: Bool = {
+        guard let labelNew = class_getInstanceMethod(NSObject.self, #selector(swizzled_accessibilityAttributedLabel)),
+              let labelOld = class_getInstanceMethod(NSObject.self, #selector(accessibilityAttributedLabel)),
+              let valueNew = class_getInstanceMethod(NSObject.self, #selector(swizzled_accessibilityAttributedValue)),
+              let valueOld = class_getInstanceMethod(NSObject.self, #selector(accessibilityAttributedValue)),
+              let hintNew = class_getInstanceMethod(NSObject.self, #selector(swizzled_accessibilityAttributedHint)),
+              let hintOld = class_getInstanceMethod(NSObject.self, #selector(accessibilityAttributedHint)),
+              let userInputLabelsNew = class_getInstanceMethod(NSObject.self, #selector(swizzled_accessibilityAttributedUserInputLabels)),
+              let userInputLabelsOld = class_getInstanceMethod(NSObject.self, #selector(accessibilityAttributedUserInputLabels)) else {
             return false
         }
         method_exchangeImplementations(labelNew, labelOld)
@@ -42,7 +44,7 @@ public extension UIView {
     }()
 
     private func callOriginal<R>(_ selector: Selector) -> R? {
-        let method = class_getMethodImplementation(UIView.self, selector)
+        let method = class_getMethodImplementation(NSObject.self, selector)
         let callable = unsafeBitCast(method, to: ObjCFunctionCallable.self)
         return callable(self, selector) as? R
     }
