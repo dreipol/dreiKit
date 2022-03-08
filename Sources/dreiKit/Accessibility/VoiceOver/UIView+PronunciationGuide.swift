@@ -10,13 +10,16 @@ import UIKit
 private typealias ObjCFunctionCallable = @convention(c) (NSObject, Selector) -> NSObject?
 
 public extension UIView {
-    static var pronunciationGuide: [String: String] = [:] {
+    typealias PronunciationGuide = (String?) -> [String: String]
+    typealias Abbreviations = (String?) -> [String: String]
+
+    static var pronunciationGuide: PronunciationGuide = { _ in [:] } {
         didSet {
             assert(swizzled, "Failed to swizzle pronunciation guide")
         }
     }
 
-    static var abbreviations: [String: String] = [:] {
+    static var abbreviations: Abbreviations = { _ in [:] } {
         didSet {
             assert(swizzled, "Failed to swizzle pronunciation guide")
         }
@@ -66,7 +69,7 @@ private extension NSObject {
             // value if that returns nil. We want to obtain that value but we need to break the recursion to avoid stack overflows.
             ?? withoutRecursion { accessibilityAttributedLabel }
         return originalResult.map {
-            NSMutableAttributedString(attributedString: $0).applyPronunciationGuide()
+            NSMutableAttributedString(attributedString: $0).applyPronunciationGuide(self)
         }
     }
 
@@ -76,7 +79,7 @@ private extension NSObject {
             // value if that returns nil. We want to obtain that value but we need to break the recursion to avoid stack overflows.
             ?? withoutRecursion { accessibilityAttributedValue }
         return originalResult.map {
-            NSMutableAttributedString(attributedString: $0).applyPronunciationGuide()
+            NSMutableAttributedString(attributedString: $0).applyPronunciationGuide(self)
         }
     }
 
@@ -86,7 +89,7 @@ private extension NSObject {
             // value if that returns nil. We want to obtain that value but we need to break the recursion to avoid stack overflows.
             ?? withoutRecursion { accessibilityAttributedHint }
         return originalResult.map {
-            NSMutableAttributedString(attributedString: $0).applyPronunciationGuide()
+            NSMutableAttributedString(attributedString: $0).applyPronunciationGuide(self)
         }
     }
 
@@ -97,28 +100,35 @@ private extension NSObject {
             ?? withoutRecursion { accessibilityAttributedUserInputLabels }
             ?? []
         return originalResult.map {
-            NSMutableAttributedString(attributedString: $0).applyPronunciationGuide()
+            NSMutableAttributedString(attributedString: $0).applyPronunciationGuide(self)
         }
     }
 }
 
 extension NSMutableAttributedString {
-    func applyPronunciationGuide() -> NSAttributedString {
+    func applyPronunciationGuide(_ object: NSObject) -> NSAttributedString {
+        applyPronunciationGuide(pronunciationGuide: UIView.pronunciationGuide(object.accessibilityLanguage),
+                                abbreviations: UIView.abbreviations(object.accessibilityLanguage))
+    }
+
+    func applyPronunciationGuide(pronunciationGuide: [String: String], abbreviations: [String: String]) -> NSAttributedString {
         guard let wordRegex = try? NSRegularExpression(pattern: "\\S+", options: []), length > 0 else {
             return self
         }
 
         let attributes = attributes(at: 0, effectiveRange: nil)
         wordRegex.mapMatches(onString: self) { word, _ in
-            let fullWord = UIView.abbreviations[word] ?? word
+            let fullWord = abbreviations[word] ?? word
 
-            guard let pronunciation = UIView.pronunciationGuide[fullWord] else {
+            guard let pronunciation = pronunciationGuide[fullWord] else {
                 return NSAttributedString(string: fullWord, attributes: attributes)
             }
 
             var resolvedAttributes = attributes
             resolvedAttributes[.accessibilitySpeechIPANotation] = pronunciation
-            return NSAttributedString(string: fullWord.lowercased(), attributes: resolvedAttributes)
+            // ipa does not work if the word contains punctutation, capital letters in the middle of the word, whitespaces, etc.
+            let sanitizedWord = fullWord.lowercased().filter(\.isLetter)
+            return NSAttributedString(string: sanitizedWord, attributes: resolvedAttributes)
         }
 
         return self
