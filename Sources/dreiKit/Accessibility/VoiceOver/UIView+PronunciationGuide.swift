@@ -107,8 +107,9 @@ private extension NSObject {
 
 extension NSMutableAttributedString {
     func applyPronunciationGuide(_ object: NSObject) -> NSAttributedString {
-        applyPronunciationGuide(pronunciationGuide: UIView.pronunciationGuide(object.accessibilityLanguage),
-                                abbreviations: UIView.abbreviations(object.accessibilityLanguage))
+        let language = object.accessibilityLanguage ?? UIView.defaultAccessibilityLanguage
+        return applyPronunciationGuide(pronunciationGuide: UIView.pronunciationGuide(language),
+                                       abbreviations: UIView.abbreviations(language))
     }
 
     func applyPronunciationGuide(pronunciationGuide: [String: String], abbreviations: [String: String]) -> NSAttributedString {
