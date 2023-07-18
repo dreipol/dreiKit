@@ -5,6 +5,7 @@
 //  Created by Nils Becker on 27.09.21.
 //  Copyright © 2019 dreipol. All rights reserved.
 //
+import Foundation
 
 private let temporaryNetworkErrorCodes: Set<Int> = [NSURLErrorTimedOut,
                                           NSURLErrorInternationalRoamingOff,
