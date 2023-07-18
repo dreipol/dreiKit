@@ -28,7 +28,9 @@ public extension Color {
         var rgb: UInt64 = 0
         let length = hexSanitized.count
 
-        guard Scanner(string: hexSanitized).scanHexInt64(&rgb) else { return nil }
+        guard Scanner(string: hexSanitized).scanHexInt64(&rgb) else {
+            return nil
+        }
 
         switch length {
         case 6:
