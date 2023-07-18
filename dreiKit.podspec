@@ -1,16 +1,16 @@
 Pod::Spec.new do |s|
   s.name             = "dreiKit"
-  s.version          = "1.1.0"
+  s.version          = "1.2.0"
   s.summary          = "A short description of dreiKit."
   s.homepage         = "https://github.com/dreipol/dreiKit"
   s.license          = { type: 'MIT', file: 'LICENSE' }
   s.author           = { "dreipol GmbH" => "dev@dreipol.ch" }
   s.source           = { git: "https://github.com/dreipol/dreiKit.git", tag: s.version.to_s }
   s.social_media_url = 'https://twitter.com/dreipol'
-  s.ios.deployment_target = '11.0'
+  s.ios.deployment_target = '15.0'
   s.requires_arc = true
   s.preserve_path = '.swiftlint.yml'
-  s.swift_version = '5.0'
+  s.swift_version = '5.6'
   s.ios.frameworks = 'UIKit', 'Foundation'
   s.ios.source_files = 'Sources/dreiKit/**/*.{swift}'
   s.info_plist = {
