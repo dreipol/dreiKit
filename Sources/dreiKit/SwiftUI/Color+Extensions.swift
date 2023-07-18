@@ -79,8 +79,12 @@ public extension Color {
         dark darkModeColor: @escaping @autoclosure () -> Color
     ) {
         self.init(UIColor(
-            light: UIColor(lightModeColor()),
-            dark: UIColor(darkModeColor())
+            light: lightModeColor().uiColor,
+            dark: darkModeColor().uiColor
         ))
+    }
+
+    var uiColor: UIColor {
+        UIColor(self)
     }
 }
