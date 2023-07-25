@@ -40,4 +40,8 @@ public extension String {
         }
         return decimalValue
     }
+    
+    func asURL()-> URL? {
+        URL(string: self)
+    }
 }
