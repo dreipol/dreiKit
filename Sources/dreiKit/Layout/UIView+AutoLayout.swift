@@ -134,7 +134,7 @@ public extension NSLayoutConstraint {
     }
 }
 
-public protocol ViewInit: class {
+public protocol ViewInit: AnyObject {
     associatedtype InitData
 
     func configure(with initData: InitData)

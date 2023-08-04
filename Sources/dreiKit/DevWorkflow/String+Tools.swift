@@ -25,8 +25,9 @@ public extension String {
         String(format: self.localized, arguments: args)
     }
 
+    @available(*, deprecated, message: "use `trimmingCharacters(in: .whitespacesAndNewlines)` directly.")
     func removingWhitespace() -> String {
-        return filter { !$0.isWhitespace }
+        return trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
     func universalDecimal() -> Double? {
@@ -40,8 +41,28 @@ public extension String {
         }
         return decimalValue
     }
-    
-    func asURL()-> URL? {
+}
+
+// MARK: URL Extensions
+
+public extension String {
+    private var urlEncoded: String? {
+        return addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)
+    }
+
+    func toURL() -> URL? {
         URL(string: self)
+    }
+
+    func toTelUrl() -> URL? {
+        return URL(string: "tel:\(self.trimmingCharacters(in: .whitespacesAndNewlines))")
+    }
+
+    func toAppleMapSearchUrl() -> URL? {
+        guard let encoded = urlEncoded else {
+            return nil
+        }
+
+        return URL(string: "https://maps.apple.com/?q=\(encoded)")
     }
 }
