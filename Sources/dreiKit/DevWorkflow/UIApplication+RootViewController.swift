@@ -17,6 +17,7 @@ extension UIApplication {
     }
 
     public var rootViewController: UIViewController! {
+        // swiftlint:disable:next force_unwrapping
         currentKeyWindow!.rootViewController
     }
 }
