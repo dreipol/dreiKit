@@ -1,6 +1,5 @@
 //
 //  Color+Extensions.swift
-//  Barryvox
 //
 //  Created by Samuel Bichsel on 11.10.22.
 //  Copyright © 2022 dreipol GmbH. All rights reserved.

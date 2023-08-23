@@ -52,8 +52,7 @@ public struct Polygon: Shape {
             if side == 0 {
                 startPoint = vertexPoint
                 path.move(to: startPoint)
-            }
-            else {
+            } else {
                 path.addLine(to: vertexPoint)
             }
 
