@@ -50,7 +50,7 @@ struct Previews_String_Markdown_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
             Text(linkText.convertHTMLTagsMarkdown())
-            Text("<strong>Plane jetzt deine Bestellung.</strong> Du kannst für eine Lieferzeit <strong>ab 17:30 Uhr</strong> vorbestellen.".convertHTMLToMarkdown())
+            Text("<strong>Plane jetzt deine Bestellung.</strong> Du kannst für eine Lieferzeit <strong>ab 17:30 Uhr</strong> vorbestellen.".convertHTMLTagsMarkdown())
         }
     }
 }
