@@ -15,7 +15,7 @@ public struct RandomShape: View {
     }
 
     public init(deterministic seed: Int) {
-        randomNumber = seed % 5
+        randomNumber = abs(seed) % 5
     }
 
     public var body: some View {
