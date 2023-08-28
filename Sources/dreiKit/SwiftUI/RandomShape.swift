@@ -14,6 +14,10 @@ public struct RandomShape: View {
         randomNumber = Int.random(in: 0 ..< 4)
     }
 
+    public init(deterministic seed: Int) {
+        randomNumber = seed % 5
+    }
+
     public var body: some View {
         switch randomNumber {
         case 0:
