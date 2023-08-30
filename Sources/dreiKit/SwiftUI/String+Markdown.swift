@@ -40,13 +40,13 @@ public extension String {
     }
 
     /// Convert html tags to markdown so that they can be used in SwiftUI
-    /// - Important: So long only **links and bold** is supported.
+    /// - Important: So far only **links and bold** are supported.
     func convertHTMLTagsMarkdown() -> LocalizedStringKey {
         return LocalizedStringKey(convertToMarkdown())
     }
 
     /// Convert html tags to markdown so that they can be used as AttributedString
-    /// - Important: So long only **links and bold** is supported.
+    /// - Important: So far only **links and bold** are supported.
     func convertHTMLTagsMarkdownAttributed() -> AttributedString? {
         return try? AttributedString(markdown: convertToMarkdown())
     }
