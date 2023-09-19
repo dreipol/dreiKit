@@ -20,4 +20,12 @@ extension UIApplication {
         // swiftlint:disable:next force_unwrapping
         currentKeyWindow!.rootViewController
     }
+
+    public var viewControllerForPresenting: UIViewController! {
+        var viewController = rootViewController
+        while let presentedViewController = viewController?.presentedViewController {
+            viewController = presentedViewController
+        }
+        return viewController
+    }
 }
