@@ -27,11 +27,11 @@ private extension View {
 }
 
 public struct TextFormat: TextModifier, Equatable {
-    let font: Font
-    let lineSpacing: CGFloat
-    let tracking: CGFloat
-    let kerning: CGFloat
-    let color: Color?
+    public let font: Font
+    public let lineSpacing: CGFloat
+    public let tracking: CGFloat
+    public let kerning: CGFloat
+    public let color: Color?
 
     public init(font: Font, lineSpacing: CGFloat = 0, tracking: CGFloat = 0, kerning: CGFloat = 0, color: Color? = nil) {
         self.font = font
