@@ -32,9 +32,9 @@ extension View {
                                                    doneTitle: LocalizedStringKey,
                                                    color: Color = .accentColor) -> some View {
         toolbar {
-            // Make sure we only show the toolbar for our own text fields
-            if focused.wrappedValue != nil {
-                ToolbarItemGroup(placement: .keyboard) {
+            ToolbarItemGroup(placement: .keyboard) {
+                // Make sure we only show the toolbar for our own text fields
+                if focused.wrappedValue != nil {
                     Button {
                         focused.wrappedValue = focused.wrappedValue?.previous
                     } label: {
@@ -61,9 +61,9 @@ extension View {
                                   doneTitle: LocalizedStringKey,
                                   color: Color = .accentColor) -> some View {
         toolbar {
-            // Make sure we only show the toolbar for our own text fields
-            if focused.wrappedValue != nil {
-                ToolbarItemGroup(placement: .keyboard) {
+            ToolbarItemGroup(placement: .keyboard) {
+                // Make sure we only show the toolbar for our own text fields
+                if focused.wrappedValue != nil {
                     Spacer()
                     Button(doneTitle) {
                         focused.wrappedValue = nil
@@ -76,9 +76,9 @@ extension View {
 
     func doneBar(focused: FocusState<Bool>.Binding, doneTitle: LocalizedStringKey, color: Color = .accentColor) -> some View {
         toolbar {
-            // Make sure we only show the toolbar for our own text fields
-            if focused.wrappedValue {
-                ToolbarItemGroup(placement: .keyboard) {
+            ToolbarItemGroup(placement: .keyboard) {
+                // Make sure we only show the toolbar for our own text fields
+                if focused.wrappedValue {
                     Spacer()
                     Button(doneTitle) {
                         focused.wrappedValue = false
