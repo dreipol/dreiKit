@@ -8,12 +8,12 @@
 
 import SwiftUI
 
-protocol FormFieldCyclable: Equatable, CaseIterable, Hashable where AllCases.Index == Int {
+public protocol FormFieldCyclable: Equatable, CaseIterable, Hashable where AllCases.Index == Int {
     var next: Self { get }
     var previous: Self { get }
 }
 
-extension FormFieldCyclable {
+public extension FormFieldCyclable {
     var next: Self {
         // swiftlint:disable:next force_unwrapping
         let index = (Self.allCases.firstIndex(of: self)! + 1) % Self.allCases.count
@@ -27,7 +27,7 @@ extension FormFieldCyclable {
     }
 }
 
-extension View {
+public extension View {
     func cycleFormFields<Field: FormFieldCyclable>(focused: FocusState<Field?>.Binding,
                                                    doneTitle: LocalizedStringKey,
                                                    color: Color = .accentColor) -> some View {
