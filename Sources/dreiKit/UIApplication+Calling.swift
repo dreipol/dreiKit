@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension UIApplication {
+public extension UIApplication {
     func tryCalling(phoneNumber: String) {
         let sanitized = phoneNumber.filter { !$0.isWhitespace }
         guard let url = URL(string: "tel://\(sanitized)") else {
