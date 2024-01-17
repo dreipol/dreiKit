@@ -16,7 +16,7 @@ public extension Text {
     }
 }
 
-private extension View {
+public extension View {
     @ViewBuilder func foregroundColorIfSet(_ color: Color?) -> some View {
         if let c = color {
             self.foregroundColor(c)
