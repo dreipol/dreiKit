@@ -1,12 +1,11 @@
 //
 //  ForegroundObserverModifier.swift
-//  
 //
 //  Created by Samuel Bichsel on 23.01.2024.
+//  Copyright © 2024 dreipol GmbH. All rights reserved.
 //
 
 import SwiftUI
-
 
 struct ForegroundObserverModifier: ViewModifier {
     @Environment(\.scenePhase) var scenePhase
