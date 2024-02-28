@@ -69,6 +69,7 @@ public struct TextFormat: TextModifier, Equatable {
 
 struct TextishViewModifier: ViewModifier {
     let format: TextFormat
+    
     func body(content: Content) -> some View {
         if #available(iOS 16.0, *) {
             return content
