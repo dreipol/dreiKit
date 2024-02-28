@@ -16,6 +16,22 @@ public extension Text {
     }
 }
 
+public protocol TextishModifier {
+    associatedtype TextishBody: View
+
+    func styleBody(_ view: some View) -> TextishBody
+}
+
+public extension View {
+    func modifier<TM: TextishModifier>(_ theModifier: TM) -> some View {
+        return theModifier.styleBody(self)
+    }
+
+    func textStyle<TM: TextishModifier>(_ style: TM) -> some View {
+        modifier(style)
+    }
+}
+
 public extension View {
     @ViewBuilder func foregroundColorIfSet(_ color: Color?) -> some View {
         if let c = color {
@@ -48,5 +64,31 @@ public struct TextFormat: TextModifier, Equatable {
             .kerning(kerning)
             .lineSpacing(lineSpacing)
             .foregroundColorIfSet(color)
+    }
+}
+
+struct TextishViewModifier: ViewModifier {
+    let format: TextFormat
+
+    func body(content: Content) -> some View {
+        if #available(iOS 16.0, *) {
+            return content
+                .font(format.font)
+                .tracking(format.tracking)
+                .kerning(format.kerning)
+                .lineSpacing(format.lineSpacing)
+                .foregroundColorIfSet(format.color)
+        } else {
+            return content
+                .font(format.font)
+                .lineSpacing(format.lineSpacing)
+                .foregroundColorIfSet(format.color)
+        }
+    }
+}
+
+public extension View {
+    func textStyle(_ style: TextFormat) -> some View {
+        return modifier(TextishViewModifier(format: style))
     }
 }
