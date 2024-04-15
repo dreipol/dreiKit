@@ -22,6 +22,9 @@ public extension String {
     }
 
     func localized(_ args: CVarArg...) -> String {
+        localized(args: args)
+    }
+    func localized(args: [any CVarArg]) -> String {
         String(format: self.localized, arguments: args)
     }
 
