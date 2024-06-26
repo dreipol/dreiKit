@@ -39,26 +39,20 @@ public extension View {
 }
 
 @resultBuilder
-struct TabsBuilder<Tag: Hashable> {
-    static func buildBlock(_ components: [CustomTabItem<Tag>]...) -> [CustomTabItem<Tag>] { Array(components.joined()) }
-
-    static func buildExpression(_ expression: CustomTabItem<Tag>) -> [CustomTabItem<Tag>] { [expression] }
-
-    static func buildArray(_ components: [[CustomTabItem<Tag>]]) -> [CustomTabItem<Tag>] { Array(components.joined()) }
-
-    static func buildOptional(_ component: [CustomTabItem<Tag>]?) -> [CustomTabItem<Tag>] { component ?? [] }
-
-    static func buildEither(first component: [CustomTabItem<Tag>]) -> [CustomTabItem<Tag>] { component }
-
-    static func buildEither(second component: [CustomTabItem<Tag>]) -> [CustomTabItem<Tag>] { component }
-
-    static func buildLimitedAvailability(_ component: [CustomTabItem<Tag>]) -> [CustomTabItem<Tag>] { component }
+public struct TabsBuilder<Tag: Hashable> {
+    public static func buildBlock(_ components: [CustomTabItem<Tag>]...) -> [CustomTabItem<Tag>] { Array(components.joined()) }
+    public static func buildExpression(_ expression: CustomTabItem<Tag>) -> [CustomTabItem<Tag>] { [expression] }
+    public static func buildArray(_ components: [[CustomTabItem<Tag>]]) -> [CustomTabItem<Tag>] { Array(components.joined()) }
+    public static func buildOptional(_ component: [CustomTabItem<Tag>]?) -> [CustomTabItem<Tag>] { component ?? [] }
+    public static func buildEither(first component: [CustomTabItem<Tag>]) -> [CustomTabItem<Tag>] { component }
+    public static func buildEither(second component: [CustomTabItem<Tag>]) -> [CustomTabItem<Tag>] { component }
+    public static func buildLimitedAvailability(_ component: [CustomTabItem<Tag>]) -> [CustomTabItem<Tag>] { component }
 }
 
 public struct TabItemConfiguration {
-    var label: AnyView
-    var isPressed: Bool
-    var isSelected: Bool
+    public var label: AnyView
+    public var isPressed: Bool
+    public var isSelected: Bool
 }
 
 public protocol TabItemStyle {
