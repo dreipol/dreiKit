@@ -3,7 +3,7 @@
 //  Barryvox
 //
 //  Created by Laila Becker on 18.06.2024.
-//  Copyright © 2024 Mammut Sports Group AG. All rights reserved.
+//  Copyright © 2024 dreipol GmbH. All rights reserved.
 //
 
 import SwiftUI
