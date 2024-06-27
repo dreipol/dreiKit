@@ -51,7 +51,7 @@ private extension View {
 private struct TabItemButtonStyle<ItemStyle: TabItemStyle>: ButtonStyle {
     let tabItemStyle: ItemStyle
     var isSelected: Bool
-    
+
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .apply(tabItemStyle: tabItemStyle, isPressed: configuration.isPressed, isSelected: isSelected)
