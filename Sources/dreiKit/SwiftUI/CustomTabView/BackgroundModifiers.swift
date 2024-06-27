@@ -15,7 +15,7 @@ public struct FullyStyledBackgroundModifier<S, T>: ViewModifier where S: ShapeSt
 
     // This is needed, because otherwise autocorrect removes the initializer which is public when synthesized
     // swiftlint:disable:next unneeded_synthesized_initializer
-    init(style: S, shape: T, fillStyle: FillStyle) {
+    internal init(style: S, shape: T, fillStyle: FillStyle) {
         self.style = style
         self.shape = shape
         self.fillStyle = fillStyle
@@ -32,7 +32,7 @@ public struct StyledBackgroundModifier<S>: ViewModifier where S: ShapeStyle {
 
     // This is needed, because otherwise autocorrect removes the initializer which is public when synthesized
     // swiftlint:disable:next unneeded_synthesized_initializer
-    init(style: S) {
+    internal init(style: S) {
         self.style = style
     }
 
@@ -48,7 +48,7 @@ public struct ShapedBackgroundModifier<T>: ViewModifier where T: Shape {
 
     // This is needed, because otherwise autocorrect removes the initializer which is public when synthesized
     // swiftlint:disable:next unneeded_synthesized_initializer
-    init(shape: T, fillStyle: FillStyle) {
+    internal init(shape: T, fillStyle: FillStyle) {
         self.shape = shape
         self.fillStyle = fillStyle
     }
@@ -65,7 +65,7 @@ public struct ViewBackgroundModifier<Background: View>: ViewModifier {
 
     // This is needed, because otherwise autocorrect removes the initializer which is public when synthesized
     // swiftlint:disable:next unneeded_synthesized_initializer
-    init(alignment: Alignment, background: @escaping () -> Background) {
+    internal init(alignment: Alignment, background: @escaping () -> Background) {
         self.alignment = alignment
         self.background = background
     }
