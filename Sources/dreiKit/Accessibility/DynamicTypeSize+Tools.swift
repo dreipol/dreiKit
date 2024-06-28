@@ -16,14 +16,6 @@ public extension DynamicTypeSize {
 
         return Self.allCases.filter { !$0.isAccessibilitySize }.max() ?? self
     }
-
-    func atMost(_ size: Self) -> Self {
-        guard self > size else {
-            return self
-        }
-
-        return size
-    }
 }
 
 private struct LimitDynamicSize: ViewModifier {
@@ -33,7 +25,7 @@ private struct LimitDynamicSize: ViewModifier {
 
     func body(content: Content) -> some View {
         content
-            .dynamicTypeSize(dynamicTypeSize.atMost(maxSize))
+            .dynamicTypeSize(max(dynamicTypeSize, maxSize))
     }
 }
 
