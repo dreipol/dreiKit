@@ -134,7 +134,6 @@ public struct CustomTabView<Tag: Hashable, ItemStyle: TabItemStyle, BarBackgroun
                 .disableAccessiblityDynamicTypeSizes()
             }
         }
-        .animation(barHidden ? .easeIn : .easeOut, value: barHidden)
     }
 }
 
