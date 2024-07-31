@@ -43,7 +43,7 @@ public extension View {
         modifier(LimitDynamicSize(maxSize: maxSize))
     }
 
-    func disableAccessiblityDynamicTypeSizes() -> some View {
+    func disableAccessibilityDynamicTypeSizes() -> some View {
         modifier(DisableAccessibilityDynamicTypeSizes())
     }
 }

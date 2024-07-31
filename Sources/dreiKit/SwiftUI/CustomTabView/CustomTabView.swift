@@ -131,7 +131,7 @@ public struct CustomTabView<Tag: Hashable, ItemStyle: TabItemStyle, BarBackgroun
                     }
                 }
                 .transition(reduceMotion ? .opacity : .offset(y: bottomSafeArea))
-                .disableAccessiblityDynamicTypeSizes()
+                .disableAccessibilityDynamicTypeSizes()
             }
         }
     }
