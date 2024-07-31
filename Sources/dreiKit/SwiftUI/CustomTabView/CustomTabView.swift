@@ -106,6 +106,7 @@ public struct CustomTabView<Tag: Hashable, ItemStyle: TabItemStyle, BarBackgroun
                         }
                         .buttonStyle(TabItemButtonStyle(tabItemStyle: tabItemStyle, isSelected: tab.tag == selection))
                         .disabled(tab.disabled)
+                        .accessibilityAddTraits(tab.tag == selection ? .isSelected : [])
                         .accessibilityShowsLargeContentViewer {
                             tab.label()
                                 .apply(tabItemStyle: tabItemStyle, isPressed: false, isSelected: false)
