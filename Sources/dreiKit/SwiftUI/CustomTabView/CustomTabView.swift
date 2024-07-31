@@ -52,9 +52,18 @@ private struct TabItemButtonStyle<ItemStyle: TabItemStyle>: ButtonStyle {
     let tabItemStyle: ItemStyle
     var isSelected: Bool
 
+    @Environment(\.accessibilityShowButtonShapes) private var showButtonShapes
+
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .apply(tabItemStyle: tabItemStyle, isPressed: configuration.isPressed, isSelected: isSelected)
+            .background {
+                if showButtonShapes && isSelected {
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(.tint)
+                        .opacity(0.3)
+                }
+            }
     }
 }
 
