@@ -64,6 +64,11 @@ private struct TabItemButtonStyle<ItemStyle: TabItemStyle>: ButtonStyle {
                         .opacity(0.3)
                 }
             }
+            .accessibilityAddTraits(isSelected ? .isSelected : [])
+            .accessibilityShowsLargeContentViewer {
+                configuration.label
+                    .apply(tabItemStyle: tabItemStyle, isPressed: false, isSelected: false)
+            }
     }
 }
 
@@ -115,11 +120,6 @@ public struct CustomTabView<Tag: Hashable, ItemStyle: TabItemStyle, BarBackgroun
                         }
                         .buttonStyle(TabItemButtonStyle(tabItemStyle: tabItemStyle, isSelected: tab.tag == selection))
                         .disabled(tab.disabled)
-                        .accessibilityAddTraits(tab.tag == selection ? .isSelected : [])
-                        .accessibilityShowsLargeContentViewer {
-                            tab.label()
-                                .apply(tabItemStyle: tabItemStyle, isPressed: false, isSelected: false)
-                        }
                     }
                 }
                 .labelStyle(VerticalLabelStyle())
