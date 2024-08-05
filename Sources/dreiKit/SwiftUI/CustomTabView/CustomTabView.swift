@@ -53,6 +53,14 @@ private struct TabItemButtonStyle<ItemStyle: TabItemStyle>: ButtonStyle {
     var isSelected: Bool
 
     @Environment(\.accessibilityShowButtonShapes) private var showButtonShapes
+    @Environment(\.colorSchemeContrast) private var colorSchemeContrast
+
+    private var contrast: Double {
+        switch colorSchemeContrast {
+        case .standard: return 1
+        case .increased: return 5
+        }
+    }
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
@@ -64,6 +72,7 @@ private struct TabItemButtonStyle<ItemStyle: TabItemStyle>: ButtonStyle {
                         .opacity(0.3)
                 }
             }
+            .contrast(contrast)
             .accessibilityAddTraits(isSelected ? .isSelected : [])
             .accessibilityShowsLargeContentViewer {
                 configuration.label
