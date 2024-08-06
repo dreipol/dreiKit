@@ -112,6 +112,7 @@ public struct CustomTabView<Tag: Hashable, ItemStyle: TabItemStyle, BarBackgroun
         GeometryReader { geo in
             CachedViews(tabs: tabs, selectedTab: selection, safeArea: geo.safeAreaInsets)
                 .ignoresSafeArea()
+                .accessibilitySortPriority(1)
         }
         .safeAreaInset(edge: .bottom, spacing: 0) {
             if !barHidden {
@@ -151,6 +152,8 @@ public struct CustomTabView<Tag: Hashable, ItemStyle: TabItemStyle, BarBackgroun
                 }
                 .transition(reduceMotion ? .opacity : .offset(y: bottomSafeArea))
                 .disableAccessibilityDynamicTypeSizes()
+                .accessibilityElement(children: .contain)
+                .accessibilitySortPriority(0)
             }
         }
     }
