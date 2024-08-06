@@ -52,9 +52,28 @@ private struct TabItemButtonStyle<ItemStyle: TabItemStyle>: ButtonStyle {
     let tabItemStyle: ItemStyle
     var isSelected: Bool
 
+    @Environment(\.accessibilityShowButtonShapes) private var showButtonShapes
+    @Environment(\.colorSchemeContrast) private var colorSchemeContrast
+
+    private var contrast: Double {
+        switch colorSchemeContrast {
+        case .standard: return 1
+        case .increased: return 5
+        }
+    }
+
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .apply(tabItemStyle: tabItemStyle, isPressed: configuration.isPressed, isSelected: isSelected)
+            .background {
+                if showButtonShapes && isSelected {
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(.tint)
+                        .opacity(0.3)
+                }
+            }
+            .contrast(contrast)
+            .accessibilityAddTraits(isSelected ? .isSelected : [])
     }
 }
 
@@ -93,6 +112,7 @@ public struct CustomTabView<Tag: Hashable, ItemStyle: TabItemStyle, BarBackgroun
         GeometryReader { geo in
             CachedViews(tabs: tabs, selectedTab: selection, safeArea: geo.safeAreaInsets)
                 .ignoresSafeArea()
+                .accessibilitySortPriority(1)
         }
         .safeAreaInset(edge: .bottom, spacing: 0) {
             if !barHidden {
@@ -131,7 +151,9 @@ public struct CustomTabView<Tag: Hashable, ItemStyle: TabItemStyle, BarBackgroun
                     }
                 }
                 .transition(reduceMotion ? .opacity : .offset(y: bottomSafeArea))
-                .disableAccessiblityDynamicTypeSizes()
+                .disableAccessibilityDynamicTypeSizes()
+                .accessibilityElement(children: .contain)
+                .accessibilitySortPriority(0)
             }
         }
     }

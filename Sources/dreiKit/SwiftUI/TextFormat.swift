@@ -43,13 +43,13 @@ public extension View {
 }
 
 public struct TextFormat: TextModifier, Equatable {
-    public let font: Font
+    public let font: AccessibleStaticFont
     public let lineSpacing: CGFloat
     public let tracking: CGFloat
     public let kerning: CGFloat
     public let color: Color?
 
-    public init(font: Font, lineSpacing: CGFloat = 0, tracking: CGFloat = 0, kerning: CGFloat = 0, color: Color? = nil) {
+    public init(font: AccessibleStaticFont, lineSpacing: CGFloat = 0, tracking: CGFloat = 0, kerning: CGFloat = 0, color: Color? = nil) {
         self.font = font
         self.lineSpacing = lineSpacing
         self.tracking = tracking
@@ -57,12 +57,21 @@ public struct TextFormat: TextModifier, Equatable {
         self.color = color
     }
 
+    public init(dynamicFont: Font, lineSpacing: CGFloat = 0, tracking: CGFloat = 0, kerning: CGFloat = 0, color: Color? = nil) {
+        self.init(font: AccessibleStaticFont(regular: dynamicFont, bold: dynamicFont),
+                  lineSpacing: lineSpacing,
+                  tracking: tracking,
+                  kerning: kerning,
+                  color: color)
+    }
+
+    @MainActor
     public func body(_ view: Text) -> some View {
         return view
-            .font(font)
             .tracking(tracking)
             .kerning(kerning)
             .lineSpacing(lineSpacing)
+            .font(font)
             .foregroundColorIfSet(color)
     }
 }
@@ -73,15 +82,15 @@ struct TextishViewModifier: ViewModifier {
     func body(content: Content) -> some View {
         if #available(iOS 16.0, *) {
             return content
-                .font(format.font)
                 .tracking(format.tracking)
                 .kerning(format.kerning)
                 .lineSpacing(format.lineSpacing)
+                .font(format.font)
                 .foregroundColorIfSet(format.color)
         } else {
             return content
-                .font(format.font)
                 .lineSpacing(format.lineSpacing)
+                .font(format.font)
                 .foregroundColorIfSet(format.color)
         }
     }
