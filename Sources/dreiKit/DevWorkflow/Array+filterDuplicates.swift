@@ -6,7 +6,7 @@
 //
 
 
-extension Array {
+public extension Array {
     func filterDuplicates<T: Hashable>(_ key: (Element) -> T) -> [Element] {
         var seen = [T: Bool]()
         return filter {
