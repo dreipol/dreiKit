@@ -64,7 +64,7 @@ public class LocationPermissionManager: NSObject, CLLocationManagerDelegate {
     }
 }
 
-fileprivate class LocationAlwaysPermissionHelper: NSObject, CLLocationManagerDelegate {
+private class LocationAlwaysPermissionHelper: NSObject, CLLocationManagerDelegate {
     let manager: CLLocationManager
 
     private var continuation: UnsafeContinuation<Bool, any Error>?
@@ -113,7 +113,9 @@ fileprivate class LocationAlwaysPermissionHelper: NSObject, CLLocationManagerDel
                 return
             }
 
-            foregroundObserver = NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: .main) { [weak self] _ in
+            foregroundObserver = NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification,
+                                                                        object: nil,
+                                                                        queue: .main) { [weak self] _ in
                 guard let self else {
                     return
                 }
@@ -127,7 +129,9 @@ fileprivate class LocationAlwaysPermissionHelper: NSObject, CLLocationManagerDel
                     self?.continuation?.resume(returning: false)
                     self?.continuation = nil
                 }
-                let backgroundObserver = NotificationCenter.default.addObserver(forName: UIApplication.willResignActiveNotification, object: nil, queue: .main) { [weak self] _ in
+                backgroundObserver = NotificationCenter.default.addObserver(forName: UIApplication.willResignActiveNotification,
+                                                                                object: nil,
+                                                                                queue: .main) { _ in
                     timer.invalidate()
                 }
                 self.manager.requestAlwaysAuthorization()
