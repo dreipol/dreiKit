@@ -125,14 +125,17 @@ private class LocationAlwaysPermissionHelper: NSObject, CLLocationManagerDelegat
             }
 
             DispatchQueue.main.async {
-                let timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false) { [weak self] _ in
-                    self?.continuation?.resume(returning: false)
-                    self?.continuation = nil
-                }
-                self.backgroundObserver = NotificationCenter.default.addObserver(forName: UIApplication.willResignActiveNotification,
-                                                                                 object: nil,
-                                                                                 queue: .main) { _ in
-                    timer.invalidate()
+                // already displaying alert?
+                if UIApplication.shared.applicationState != .background {
+                    let timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false) { [weak self] _ in
+                        self?.continuation?.resume(returning: false)
+                        self?.continuation = nil
+                    }
+                    self.backgroundObserver = NotificationCenter.default.addObserver(forName: UIApplication.willResignActiveNotification,
+                                                                                     object: nil,
+                                                                                     queue: .main) { _ in
+                        timer.invalidate()
+                    }
                 }
                 self.manager.requestAlwaysAuthorization()
             }
