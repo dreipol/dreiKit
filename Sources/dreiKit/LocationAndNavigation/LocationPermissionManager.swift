@@ -129,9 +129,9 @@ private class LocationAlwaysPermissionHelper: NSObject, CLLocationManagerDelegat
                     self?.continuation?.resume(returning: false)
                     self?.continuation = nil
                 }
-                backgroundObserver = NotificationCenter.default.addObserver(forName: UIApplication.willResignActiveNotification,
-                                                                            object: nil,
-                                                                            queue: .main) { _ in
+                self.backgroundObserver = NotificationCenter.default.addObserver(forName: UIApplication.willResignActiveNotification,
+                                                                                 object: nil,
+                                                                                 queue: .main) { _ in
                     timer.invalidate()
                 }
                 self.manager.requestAlwaysAuthorization()
