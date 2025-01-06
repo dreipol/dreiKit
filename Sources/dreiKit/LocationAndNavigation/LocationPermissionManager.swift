@@ -6,6 +6,7 @@
 //
 
 import CoreLocation
+import UIKit
 
 public extension CLAuthorizationStatus {
     var isLocationAvailable: Bool {
@@ -60,5 +61,95 @@ public class LocationPermissionManager: NSObject, CLLocationManagerDelegate {
         callbacks.append { status in
             callback(status.isLocationAvailable)
         }
+    }
+}
+
+private class LocationAlwaysPermissionHelper: NSObject, CLLocationManagerDelegate {
+    let manager: CLLocationManager
+
+    private var continuation: UnsafeContinuation<Bool, any Error>?
+    private var foregroundObserver: NSObjectProtocol?
+    private var backgroundObserver: NSObjectProtocol?
+
+    override init() {
+        manager = CLLocationManager()
+        super.init()
+        manager.delegate = self
+    }
+
+    func requestAlwaysPermission() async throws -> Bool {
+        if CLLocationManager.authorizationStatus() == .authorizedAlways {
+            return true
+        }
+
+        return try await withUnsafeThrowingContinuation { continuation in
+            self.continuation = continuation
+            continueCheck()
+        }
+    }
+
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        continueCheck()
+    }
+
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: any Error) {
+        continuation?.resume(throwing: error)
+        continuation = nil
+    }
+
+    private func continueCheck() {
+        guard let continuation else {
+            return
+        }
+
+        switch manager.authorizationStatus {
+        case .notDetermined:
+            manager.requestWhenInUseAuthorization()
+        case .authorizedAlways:
+            continuation.resume(returning: true)
+            self.continuation = nil
+        case .authorizedWhenInUse:
+            guard foregroundObserver == nil && backgroundObserver == nil else {
+                return
+            }
+
+            foregroundObserver = NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification,
+                                                                        object: nil,
+                                                                        queue: .main) { [weak self] _ in
+                guard let self else {
+                    return
+                }
+
+                self.continuation?.resume(returning: self.manager.authorizationStatus == .authorizedAlways)
+                self.continuation = nil
+            }
+
+            DispatchQueue.main.async {
+                // already displaying alert?
+                if UIApplication.shared.applicationState != .background {
+                    let timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false) { [weak self] _ in
+                        self?.continuation?.resume(returning: false)
+                        self?.continuation = nil
+                    }
+                    self.backgroundObserver = NotificationCenter.default.addObserver(forName: UIApplication.willResignActiveNotification,
+                                                                                     object: nil,
+                                                                                     queue: .main) { _ in
+                        timer.invalidate()
+                    }
+                }
+                self.manager.requestAlwaysAuthorization()
+            }
+        default:
+            continuation.resume(returning: false)
+            self.continuation = nil
+        }
+    }
+}
+
+public extension CLLocationManager {
+    @MainActor
+    static func runRequestAlwaysAuthorizationFlow() async throws -> Bool {
+        let helper = LocationAlwaysPermissionHelper()
+        return try await helper.requestAlwaysPermission()
     }
 }
