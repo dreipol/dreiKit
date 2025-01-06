@@ -146,8 +146,6 @@ private class LocationAlwaysPermissionHelper: NSObject, CLLocationManagerDelegat
     }
 }
 
-private var helper: LocationAlwaysPermissionHelper?
-
 public extension CLLocationManager {
     @MainActor
     static func runRequestAlwaysAuthorizationFlow() async throws -> Bool {
