@@ -48,10 +48,23 @@ public extension String {
 }
 
 public extension AttributedString {
-    init(markdown: String, regularFont: Font, boldFont: Font? = nil, italicFont: Font? = nil, boldItalicFont: Font? = nil) throws {
+    init(markdown: String,
+         regularFont: Font,
+         boldFont: Font? = nil,
+         italicFont: Font? = nil,
+         boldItalicFont: Font? = nil,
+         linkColor: Color? = nil,
+         linkUnderline: Bool = false) throws {
         try self.init(markdown: markdown)
         self.font = regularFont
         for run in runs {
+            if let linkColor, run.link != nil {
+                self[run.range].foregroundColor = linkColor
+            }
+            if linkUnderline, run.link != nil {
+                self[run.range].underlineStyle = .single
+            }
+
             guard let presentationIntents = run.inlinePresentationIntent else {
                 continue
             }
