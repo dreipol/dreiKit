@@ -20,12 +20,11 @@ public extension View {
             presenting.wrappedValue = nil
         })
 
-        return self
-            .alert(presenting.wrappedValue.map { title($0) } ?? "",
-                   isPresented: isPresentedBinding,
-                   presenting: presenting.wrappedValue,
-                   actions: actions,
-                   message: message)
+        return self.alert(presenting.wrappedValue.map { title($0) } ?? "",
+                          isPresented: isPresentedBinding,
+                          presenting: presenting.wrappedValue,
+                          actions: actions,
+                          message: message)
     }
 
     func alert<T, Message, Actions>(presenting: Binding<T?>,
@@ -40,12 +39,11 @@ public extension View {
             presenting.wrappedValue = nil
         })
 
-        return self
-            .alert(presenting.wrappedValue.map { title($0) } ?? "",
-                   isPresented: isPresentedBinding,
-                   presenting: presenting.wrappedValue,
-                   actions: actions,
-                   message: message)
+        return self.alert(presenting.wrappedValue.map { title($0) } ?? "",
+                          isPresented: isPresentedBinding,
+                          presenting: presenting.wrappedValue,
+                          actions: actions,
+                          message: message)
     }
 
     func alert<T, Actions>(presenting: Binding<T?>,
