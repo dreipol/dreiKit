@@ -47,39 +47,6 @@ public extension String {
     }
 }
 
-public extension AttributedString {
-    init(markdown: String,
-         regularFont: Font,
-         boldFont: Font? = nil,
-         italicFont: Font? = nil,
-         boldItalicFont: Font? = nil,
-         linkColor: Color? = nil,
-         linkUnderline: Bool = false) throws {
-        try self.init(markdown: markdown)
-        self.font = regularFont
-        for run in runs {
-            if let linkColor, run.link != nil {
-                self[run.range].foregroundColor = linkColor
-            }
-            if linkUnderline, run.link != nil {
-                self[run.range].underlineStyle = .single
-            }
-
-            guard let presentationIntents = run.inlinePresentationIntent else {
-                continue
-            }
-
-            if presentationIntents.contains(.stronglyEmphasized) && presentationIntents.contains(.emphasized) {
-                self[run.range].font = boldItalicFont ?? boldFont ?? italicFont ?? regularFont
-            } else if presentationIntents.contains(.stronglyEmphasized) {
-                self[run.range].font = boldFont ?? regularFont
-            } else if presentationIntents.contains(.emphasized) {
-                self[run.range].font = italicFont ?? regularFont
-            }
-        }
-    }
-}
-
 // MARK: URL Extensions
 
 public extension String {
