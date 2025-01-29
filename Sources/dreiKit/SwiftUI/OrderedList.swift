@@ -34,7 +34,10 @@ public struct OrderedList<Label>: View where Label: View {
     var itemSpacing: CGFloat?
     var items: [AnyView]
 
-    init(labelGenerator: @escaping (Int) -> Label, labelSpacing: CGFloat? = nil, itemSpacing: CGFloat? = nil, @OrderedListBuilder items: () -> [AnyView]) {
+    init(labelGenerator: @escaping (Int) -> Label,
+         labelSpacing: CGFloat? = nil,
+         itemSpacing: CGFloat? = nil,
+         @OrderedListBuilder items: () -> [AnyView]) {
         self.labelGenerator = labelGenerator
         self.labelSpacing = labelSpacing
         self.itemSpacing = itemSpacing
