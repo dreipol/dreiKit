@@ -6,7 +6,6 @@
 //  Copyright © 2019 dreipol. All rights reserved.
 //
 
-import SwiftUI
 import Foundation
 
 public extension String {
