@@ -30,9 +30,9 @@ private struct ApplyFontDefinition: ViewModifier {
 // ⚠️ This causes infinite recursion because the compiler picks this function over the (more specific) version in SwiftUI when evaluating
 // the ViewModifier above.
 //
-//extension Font: FontDefinition {
+// extension Font: FontDefinition {
 //    public func font(for legibilityWeight: LegibilityWeight) -> Font { self }
-//}
+// }
 
 public struct AccessibleStaticFont: FontDefinition {
     let regular: Font

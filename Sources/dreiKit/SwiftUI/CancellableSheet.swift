@@ -33,7 +33,7 @@ public extension View {
     func cancellableSheet<Content>(isPresented: Binding<Bool>,
                                    cancelButtonLabel: LocalizedStringKey,
                                    cancelPlacement: ToolbarItemPlacement = .topBarLeading,
-                                   @ViewBuilder content: @escaping () -> Content) -> some View where Content : View {
+                                   @ViewBuilder content: @escaping () -> Content) -> some View where Content: View {
         sheet(isPresented: isPresented) {
             content()
                 .modifier(CancellableSheetContent(cancelButtonLabel: cancelButtonLabel, placement: cancelPlacement))
