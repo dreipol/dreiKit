@@ -69,3 +69,20 @@ public extension String {
         return URL(string: "https://maps.apple.com/?q=\(encoded)")
     }
 }
+
+public extension Collection where Element == AttributedString {
+    func joined(separator: AttributedString = " ") -> AttributedString {
+        guard !isEmpty else {
+            return AttributedString()
+        }
+
+        // swiftlint:disable:next force_unwrapping
+        return dropFirst().reduce(first!) { reduced, next in
+            reduced + separator + next
+        }
+    }
+
+    func joined(separator: String = " ") -> AttributedString {
+        joined(separator: AttributedString(separator))
+    }
+}
