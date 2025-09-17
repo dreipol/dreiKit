@@ -10,12 +10,14 @@ import QuartzCore.CALayer
 import UIKit.UIScreen
 
 public extension CALayer {
+    @MainActor
     func addGradient(size: CGSize, colors: [CGColor], locations: [NSNumber]? = nil, shouldRasterize: Bool = false) -> CALayer {
         let gradientLayer = CALayer.createGradient(size: size, colors: colors, locations: locations, shouldRasterize: shouldRasterize)
         addSublayer(gradientLayer)
         return gradientLayer
     }
 
+    @MainActor
     static func createGradient(size: CGSize,
                                colors: [CGColor],
                                locations: [NSNumber]? = [0, 1],

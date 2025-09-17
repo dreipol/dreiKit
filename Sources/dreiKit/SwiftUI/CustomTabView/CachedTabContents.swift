@@ -57,6 +57,21 @@ class CachedHostingController<Tag: Hashable>: UIViewController {
     }
 }
 
+private extension UIView {
+    //  This is a bit duplicated code from UIView+AutoLayout.swift to avoid add the whole target as dependency
+    func fillSuperview() {
+        guard let superview = superview else {
+            return
+        }
+        NSLayoutConstraint.activate([
+            leadingAnchor.constraint(equalTo: superview.leadingAnchor),
+            trailingAnchor.constraint(equalTo: superview.trailingAnchor),
+            topAnchor.constraint(equalTo: superview.topAnchor),
+            bottomAnchor.constraint(equalTo: superview.bottomAnchor)
+        ])
+    }
+}
+
 struct CachedViews<Tag: Hashable>: UIViewControllerRepresentable {
     typealias UIViewControllerType = CachedHostingController<Tag>
 

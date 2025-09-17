@@ -8,7 +8,8 @@
 import UIKit
 
 public extension CALayer {
-  func addShadow(
+    @MainActor
+    func addShadow(
     color: UIColor,
     x: CGFloat,
     y: CGFloat,

@@ -13,6 +13,14 @@ let package = Package(
             name: "dreiKit",
             targets: ["dreiKit"]
         ),
+        .library(
+            name: "dreiKitUIKit",
+            targets: ["dreiKitUIKit"]
+        ),
+        .library(
+            name: "dreiKitLocation",
+            targets: ["dreiKitLocation"]
+        ),
     ],
     dependencies: [
     ],
@@ -21,7 +29,23 @@ let package = Package(
             name: "dreiKit",
             dependencies: [],
             linkerSettings: [
+                .linkedFramework("SwiftUI"),
                 .linkedFramework("UIKit"),
+            ]
+        ),
+        .target(
+            name: "dreiKitUIKit",
+            dependencies: [],
+            linkerSettings: [
+                .linkedFramework("UIKit"),
+            ]
+        ),
+        .target(
+            name: "dreiKitLocation",
+            dependencies: [],
+            linkerSettings: [
+                .linkedFramework("UIKit"),
+                .linkedFramework("CoreLocation"),
             ]
         ),
         .testTarget(

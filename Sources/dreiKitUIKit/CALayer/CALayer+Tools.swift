@@ -18,7 +18,7 @@ public extension CALayer {
         }
     }
 
-    func setFrameTo(edge: UIRectEdge, view: UIView, thickness: CGFloat) {
+    @MainActor func setFrameTo(edge: UIRectEdge, view: UIView, thickness: CGFloat) {
         switch edge {
         case .top:
             frame = CGRect(x: 0, y: 0, width: view.frame.width, height: thickness)
