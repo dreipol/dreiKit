@@ -8,6 +8,7 @@
 import Foundation
 import UIKit.UIView
 
+@MainActor
 public struct Animation {
     public static func spring(_ animation: @escaping (() -> Void),
                               duration: TimeInterval = 0.3,

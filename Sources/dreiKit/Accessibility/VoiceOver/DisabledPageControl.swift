@@ -21,7 +21,6 @@ public class DisabledPageControl: UIPageControl {
 
     public override init(frame: CGRect) {
         super.init(frame: frame)
-
         isUserInteractionEnabled = false
     }
 

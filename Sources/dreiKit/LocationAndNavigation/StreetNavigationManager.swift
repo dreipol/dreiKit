@@ -27,12 +27,13 @@ public enum DirectionMode: String {
 }
 
 public struct StreetNavigationManager {
-    weak private(set) var viewController: UIViewController?
+    private(set) weak var viewController: UIViewController?
 
     public init(viewController: UIViewController) {
         self.viewController = viewController
     }
 
+    @MainActor
     private func pickMapsApp(urls: [String: URL], prompt: String, cancelTitle: String, appPickerSourceView: UIView) {
         let picker = UIAlertController(title: prompt, message: nil, preferredStyle: .actionSheet)
         picker.popoverPresentationController?.sourceView = appPickerSourceView
@@ -51,14 +52,15 @@ public struct StreetNavigationManager {
     }
 
     /**
-     Show directions. If Google Maps is installed lets user choose which app to use.
+      Show directions. If Google Maps is installed lets user choose which app to use.
 
-     Checking whether Google Maps is installed requires `comgooglemaps` to be added to `LSApplicationQueriesSchemes in the App's Info.plist
+      Checking whether Google Maps is installed requires `comgooglemaps` to be added to `LSApplicationQueriesSchemes in the App's Info.plist
 
-     - Parameter from: starting point for the navigation or nil if current locaiton should be used
-     - Parameter to: destination for the navigation
-     - Parameter appChoicePrompt: title for action sheet when choosing between Apple Maps and Google Maps
-    */
+      - Parameter from: starting point for the navigation or nil if current locaiton should be used
+      - Parameter to: destination for the navigation
+      - Parameter appChoicePrompt: title for action sheet when choosing between Apple Maps and Google Maps
+     */
+    @MainActor
     public func showStreetDirections(from: QueryEncodableAddress? = nil,
                                      to: QueryEncodableAddress,
                                      directionMode: DirectionMode = .driving,

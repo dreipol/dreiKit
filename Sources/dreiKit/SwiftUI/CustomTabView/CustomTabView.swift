@@ -56,9 +56,10 @@ private struct TabItemButtonStyle<ItemStyle: TabItemStyle>: ButtonStyle {
     @Environment(\.colorSchemeContrast) private var colorSchemeContrast
 
     private var contrast: Double {
-        switch colorSchemeContrast {
-        case .standard: return 1
-        case .increased: return 5
+        return switch colorSchemeContrast {
+        case .standard: 1
+        case .increased: 5
+        @unknown default: 1
         }
     }
 

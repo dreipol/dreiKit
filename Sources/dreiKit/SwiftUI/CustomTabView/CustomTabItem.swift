@@ -63,7 +63,7 @@ public protocol TabItemStyle {
     typealias Configuration = TabItemConfiguration
 }
 
-public struct NoneTabItemStyle: TabItemStyle {
+public struct NoneTabItemStyle: TabItemStyle, Sendable {
     static let none: Self = NoneTabItemStyle()
 
     private init() {}
