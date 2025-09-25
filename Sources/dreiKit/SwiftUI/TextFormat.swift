@@ -42,6 +42,7 @@ public extension View {
     }
 }
 
+@MainActor
 public struct TextFormat: @MainActor TextModifier, Equatable {
     public let font: AccessibleStaticFont
     public let lineSpacing: CGFloat
@@ -65,7 +66,7 @@ public struct TextFormat: @MainActor TextModifier, Equatable {
                   color: color)
     }
 
-    @MainActor public func body(_ view: Text) -> some View {
+    public func body(_ view: Text) -> some View {
         return view
             .tracking(tracking)
             .kerning(kerning)
