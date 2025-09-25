@@ -40,7 +40,7 @@ public actor TokenBucket {
         nextWaiter.resume()
     }
 
-    public func withToken<ReturnValue>(_ body: () async throws -> ReturnValue) async rethrows -> ReturnValue {
+    public func withToken<ReturnValue>(_ body: @Sendable () async throws -> ReturnValue) async rethrows -> ReturnValue {
         await self.enter()
         defer {
             self.exit()
