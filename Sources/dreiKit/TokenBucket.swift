@@ -1,14 +1,14 @@
 import Foundation
 
 public actor TokenBucket {
-    enum State {
+    private enum State {
         case full
         case empty(waiters: [CheckedContinuation<Void, Never>])
     }
 
     private var state: State
 
-    init() {
+    public init() {
         self.state = .full
     }
 
@@ -40,7 +40,7 @@ public actor TokenBucket {
         nextWaiter.resume()
     }
 
-    func withToken<ReturnValue>(_ body: () async throws -> ReturnValue) async rethrows -> ReturnValue {
+    public func withToken<ReturnValue>(_ body: () async throws -> ReturnValue) async rethrows -> ReturnValue {
         await self.enter()
         defer {
             self.exit()
