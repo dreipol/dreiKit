@@ -50,7 +50,6 @@ public class LocationPermissionManager: NSObject, CLLocationManagerDelegate {
     }
 
     /// Only use with `CLLocationButton` (introduced in iOS 15) to be notified when location updates are availabel.
-    @available(iOS 15.0, *)
     public func checkLocationButtonGranted(callback: @escaping (Bool) -> Void) {
         let status = manager.authorizationStatus
         guard !status.isLocationAvailable else {
