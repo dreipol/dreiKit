@@ -42,7 +42,7 @@ public struct AccessibleStaticFont: FontDefinition, Sendable {
         return switch legibilityWeight {
         case .regular: regular
         case .bold: bold
-        @unknown default: fatalError()
+        @unknown default: regular
         }
     }
 }
