@@ -23,13 +23,13 @@ public class LocationPermissionManager: NSObject, CLLocationManagerDelegate {
     let manager = CLLocationManager()
     var callbacks = [(CLAuthorizationStatus) -> Void]()
 
-    public override init() {
+    override public init() {
         super.init()
         manager.delegate = self
     }
 
     public func requestPermissionIfNeeded(callback: @escaping (CLAuthorizationStatus) -> Void) {
-        let status = CLLocationManager.authorizationStatus()
+        let status = manager.authorizationStatus
         guard status == .notDetermined else {
             callback(status)
             return
@@ -49,10 +49,9 @@ public class LocationPermissionManager: NSObject, CLLocationManagerDelegate {
         callbacks = []
     }
 
-    @available(iOS 15.0, *)
     /// Only use with `CLLocationButton` (introduced in iOS 15) to be notified when location updates are availabel.
     public func checkLocationButtonGranted(callback: @escaping (Bool) -> Void) {
-        let status = CLLocationManager.authorizationStatus()
+        let status = manager.authorizationStatus
         guard !status.isLocationAvailable else {
             callback(true)
             return
@@ -64,7 +63,7 @@ public class LocationPermissionManager: NSObject, CLLocationManagerDelegate {
     }
 }
 
-private class LocationAlwaysPermissionHelper: NSObject, CLLocationManagerDelegate {
+private class LocationAlwaysPermissionHelper: NSObject, @preconcurrency CLLocationManagerDelegate {
     let manager: CLLocationManager
 
     private var continuation: UnsafeContinuation<Bool, any Error>?
@@ -77,8 +76,9 @@ private class LocationAlwaysPermissionHelper: NSObject, CLLocationManagerDelegat
         manager.delegate = self
     }
 
+    @MainActor
     func requestAlwaysPermission() async throws -> Bool {
-        if CLLocationManager.authorizationStatus() == .authorizedAlways {
+        if manager.authorizationStatus == .authorizedAlways {
             return true
         }
 
@@ -88,6 +88,7 @@ private class LocationAlwaysPermissionHelper: NSObject, CLLocationManagerDelegat
         }
     }
 
+    @MainActor
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         continueCheck()
     }
@@ -97,6 +98,7 @@ private class LocationAlwaysPermissionHelper: NSObject, CLLocationManagerDelegat
         continuation = nil
     }
 
+    @MainActor
     private func continueCheck() {
         guard let continuation else {
             return
@@ -109,7 +111,7 @@ private class LocationAlwaysPermissionHelper: NSObject, CLLocationManagerDelegat
             continuation.resume(returning: true)
             self.continuation = nil
         case .authorizedWhenInUse:
-            guard foregroundObserver == nil && backgroundObserver == nil else {
+            guard foregroundObserver == nil, backgroundObserver == nil else {
                 return
             }
 

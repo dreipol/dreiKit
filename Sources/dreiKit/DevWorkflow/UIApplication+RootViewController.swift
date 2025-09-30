@@ -5,7 +5,7 @@
 //  Created by Samuel Bichsel on 15.08.23.
 //
 
-import UIKit
+import UIKit.UIApplication
 
 extension UIApplication {
     var currentKeyWindow: UIWindow? {

@@ -34,14 +34,15 @@ private struct ApplyFontDefinition: ViewModifier {
 //    public func font(for legibilityWeight: LegibilityWeight) -> Font { self }
 // }
 
-public struct AccessibleStaticFont: FontDefinition {
+public struct AccessibleStaticFont: FontDefinition, Sendable {
     let regular: Font
     let bold: Font
 
     public func font(for legibilityWeight: LegibilityWeight) -> Font {
-        switch legibilityWeight {
-        case .regular: return regular
-        case .bold: return bold
+        return switch legibilityWeight {
+        case .regular: regular
+        case .bold: bold
+        @unknown default: regular
         }
     }
 }

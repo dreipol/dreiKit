@@ -17,7 +17,7 @@ public extension UIView {
 
 private extension NSObject {
     // implicitly lazy => dispatch_once
-    static var swizzled: Bool = {
+    @MainActor static var swizzled: Bool = {
         guard let defaultingMethod = class_getInstanceMethod(NSObject.self, #selector(swizzled_accessibilityLanguage)),
               let originalMethod = class_getInstanceMethod(NSObject.self, #selector(accessibilityLanguage)) else {
             return false
@@ -31,7 +31,7 @@ private extension NSObject {
         return true
     }()
 
-    @objc private func swizzled_accessibilityLanguage() -> String? {
+    @MainActor @objc private func swizzled_accessibilityLanguage() -> String? {
         if let overrideAccessibilityLanguage = overrideAccessibiltyLanguage() {
             return overrideAccessibilityLanguage
         }

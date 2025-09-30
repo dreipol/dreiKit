@@ -28,7 +28,7 @@ public extension UIView {
 
 private extension NSObject {
     // implicitly lazy => dispatch_once
-    static var swizzled: Bool = {
+    @MainActor static var swizzled: Bool = {
         guard let labelNew = class_getInstanceMethod(NSObject.self, #selector(swizzled_accessibilityAttributedLabel)),
               let labelOld = class_getInstanceMethod(NSObject.self, #selector(accessibilityAttributedLabel)),
               let valueNew = class_getInstanceMethod(NSObject.self, #selector(swizzled_accessibilityAttributedValue)),

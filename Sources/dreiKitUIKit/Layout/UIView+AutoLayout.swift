@@ -141,6 +141,7 @@ public protocol ViewInit: AnyObject {
 }
 
 public extension ViewInit where Self: UIView {
+    @MainActor
     static func autoLayout(with initData: InitData) -> Self {
         let view = autoLayout()
         view.configure(with: initData)
